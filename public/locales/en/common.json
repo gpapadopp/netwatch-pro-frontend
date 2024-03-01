@@ -1,5 +1,11 @@
 {
   "the_page_you_are_looking_is_not_there": "The page you're looking for doesn't seem to be here",
   "you_either_tried_some_shady_route": "You either tried some shady route or you came here by mistake.\nWhichever it is, try using the navigation",
-  "go_to_home_page": "Go Home Page"
+  "go_to_home_page": "Go Home Page",
+  "login": "Login",
+  "welcome": "Welcome",
+  "login_to_have_access_to_the_administration_panel": "Login to be able to access the admin panel",
+  "username": "Username",
+  "email_address": "Email Address",
+  "password": "Password"
 }

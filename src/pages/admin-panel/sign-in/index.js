@@ -5,14 +5,19 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Box, Button, Grid, Tab, Tabs, TextField, Typography } from '@mui/material';
 import { auth, ENABLE_AUTH } from '@/lib/auth';
-import { Logo } from '@/components/logo';
+import { Logo } from '@/components/admin/logo';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
-const Page = () => {
+export default function LoginPage(){
+  const { t } = useTranslation('common')
   const [tab, setTab] = useState('email');
   const [emailSent, setEmailSent] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: '',
+      password: "",
+      username: "",
       submit: null
     },
     validationSchema: Yup.object({
@@ -23,29 +28,30 @@ const Page = () => {
         .required('Email is required')
     }),
     onSubmit: async (values, helpers) => {
-      if (!ENABLE_AUTH) {
-        helpers.setFieldError('submit', 'Zalter authentication not enabled');
-        helpers.setSubmitting(false);
-        return;
-      }
-
-      try {
-        // When in development, this will be 'http://localhost:3000/sign-in/confirm'
-        // Remember to configure it in your project settings
-        const redirectUri = window.location.href + '/confirm';
-
-        // This can be call inside AuthProvider component, but we do it here for simplicity
-        await auth.signInWithLink('start', {
-          email: values.email,
-          redirectUri
-        });
-        helpers.setSubmitting(false);
-        setEmailSent(true);
-      } catch (err) {
-        console.error(err);
-        helpers.setFieldError('submit', err.message || 'Something went wrong');
-        helpers.setSubmitting(false);
-      }
+      console.log(values);
+      // if (!ENABLE_AUTH) {
+      //   helpers.setFieldError('submit', 'Zalter authentication not enabled');
+      //   helpers.setSubmitting(false);
+      //   return;
+      // }
+      //
+      // try {
+      //   // When in development, this will be 'http://localhost:3000/sign-in/confirm'
+      //   // Remember to configure it in your project settings
+      //   const redirectUri = window.location.href + '/confirm';
+      //
+      //   // This can be call inside AuthProvider component, but we do it here for simplicity
+      //   await auth.signInWithLink('start', {
+      //     email: values.email,
+      //     redirectUri
+      //   });
+      //   helpers.setSubmitting(false);
+      //   setEmailSent(true);
+      // } catch (err) {
+      //   console.error(err);
+      //   helpers.setFieldError('submit', err.message || 'Something went wrong');
+      //   helpers.setSubmitting(false);
+      // }
     }
   });
 
@@ -53,14 +59,10 @@ const Page = () => {
     setTab(value);
   };
 
-  const handleRetry = () => {
-    setEmailSent(false);
-  };
-
   return (
     <>
       <Head>
-        <title>Sign in | Material Kit</title>
+        <title>{t('login')} | NetWatch Pro</title>
       </Head>
       <Box
         component="main"
@@ -123,127 +125,120 @@ const Page = () => {
                   width: '100%'
                 }}
               >
-                {emailSent ? (
+                <Typography
+                  sx={{ mb: 1 }}
+                  variant="h4"
+                >
+                  {t('welcome')}
+                </Typography>
+                <Typography
+                  color="text.secondary"
+                  sx={{ mb: 3 }}
+                  variant="body2"
+                >
+                  {t('login_to_have_access_to_the_administration_panel')}
+                </Typography>
+                <Tabs
+                  onChange={handleTabChange}
+                  sx={{ mb: 3 }}
+                  value={tab}
+                >
+                  <Tab
+                    label="Email"
+                    value="email"
+                  />
+                  <Tab
+                    label={t('username')}
+                    value="username"
+                  />
+                </Tabs>
+                {tab === 'email' && (
                   <div>
-                    <Typography
-                      sx={{ mb: 1 }}
-                      variant="h4"
-                    >
-                      Confirm your email
-                    </Typography>
-                    <Typography>
-                      We emailed a magic link to&nbsp;
-                      <Box
-                        component="span"
-                        sx={{
-                          color: 'primary.main'
-                        }}
-                      >
-                        {formik.values.email}
-                      </Box>
-                      <br />
-                      Click the link to to log in.
-                    </Typography>
-                    <Box
-                      sx={{
-                        alignItems: 'center',
-                        display: 'flex',
-                        gap: 3,
-                        mt: 3
-                      }}
-                    >
+                    <TextField
+                      error={Boolean(formik.touched.email && formik.errors.email)}
+                      fullWidth
+                      helperText={formik.touched.email && formik.errors.email}
+                      label={t('email_address')}
+                      name="email"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      type="email"
+                      value={formik.values.email}
+                      variant="outlined"
+                    />
+                    <br/>
+                    <br/>
+                    <TextField
+                      error={Boolean(formik.touched.password && formik.errors.password)}
+                      fullWidth
+                      helperText={formik.touched.password && formik.errors.password}
+                      label={t('password')}
+                      name="password"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      type="password"
+                      value={formik.values.password}
+                      variant="outlined"
+                    />
+                    {formik.errors.submit && (
                       <Typography
-                        color="text.secondary"
+                        color="error"
+                        sx={{ mt: 2 }}
                         variant="body2"
                       >
-                        Wrong email?
+                        {formik.errors.submit}
                       </Typography>
-                      <Button
-                        color="inherit"
-                        onClick={handleRetry}
-                      >
-                        Use a different email
-                      </Button>
-                    </Box>
-                  </div>
-                ) : (
-                  <div>
-                    <Typography
-                      sx={{ mb: 1 }}
-                      variant="h4"
-                    >
-                      Welcome
-                    </Typography>
-                    <Typography
-                      color="text.secondary"
-                      sx={{ mb: 3 }}
-                      variant="body2"
-                    >
-                      Sign up on the internal platform
-                    </Typography>
-                    <Tabs
-                      onChange={handleTabChange}
-                      sx={{ mb: 3 }}
-                      value={tab}
-                    >
-                      <Tab
-                        label="Email"
-                        value="email"
-                      />
-                      <Tab
-                        label="Phone Number"
-                        value="phoneNumber"
-                      />
-                    </Tabs>
-                    {tab === 'email' && (
-                      <div>
-                        <TextField
-                          error={Boolean(formik.touched.email && formik.errors.email)}
-                          fullWidth
-                          helperText={formik.touched.email && formik.errors.email}
-                          label="Email Address"
-                          name="email"
-                          onBlur={formik.handleBlur}
-                          onChange={formik.handleChange}
-                          type="email"
-                          value={formik.values.email}
-                          variant="outlined"
-                        />
-                        {formik.errors.submit && (
-                          <Typography
-                            color="error"
-                            sx={{ mt: 2 }}
-                            variant="body2"
-                          >
-                            {formik.errors.submit}
-                          </Typography>
-                        )}
-                        <Button
-                          fullWidth
-                          size="large"
-                          sx={{ mt: 3 }}
-                          onClick={() => formik.handleSubmit()}
-                          variant="contained"
-                        >
-                          Continue
-                        </Button>
-                      </div>
-                    )}
-                    {tab === 'phoneNumber' && (
-                      <div>
-                        <Typography
-                          sx={{ mb: 1 }}
-                          variant="h6"
-                        >
-                          Not available in the demo
-                        </Typography>
-                        <Typography color="text.secondary">
-                          Zalter Identity does support SMS passcodes, but to prevent unnecessary costs we disabled this feature in the demo.
-                        </Typography>
-                      </div>
                     )}
                   </div>
                 )}
+                {tab === 'username' && (
+                  <div>
+                    <TextField
+                      error={Boolean(formik.touched.username && formik.errors.username)}
+                      fullWidth
+                      helperText={formik.touched.username && formik.errors.username}
+                      label={t('username')}
+                      name="username"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      type="text"
+                      value={formik.values.username}
+                      variant="outlined"
+                    />
+                    <br/>
+                    <br/>
+                    <TextField
+                      error={Boolean(formik.touched.password && formik.errors.password)}
+                      fullWidth
+                      helperText={formik.touched.password && formik.errors.password}
+                      label={t('password')}
+                      name="password"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      type="password"
+                      value={formik.values.password}
+                      variant="outlined"
+                    />
+                    {formik.errors.submit && (
+                      <Typography
+                        color="error"
+                        sx={{ mt: 2 }}
+                        variant="body2"
+                      >
+                        {formik.errors.submit}
+                      </Typography>
+                    )}
+                  </div>
+                )}
+                <Button
+                  fullWidth
+                  size="large"
+                  sx={{ mt: 3 }}
+                  onClick={() => formik.handleSubmit()}
+                  variant="contained"
+                >
+                  {t('login')}
+                </Button>
               </Box>
             </Box>
           </Grid>
@@ -253,7 +248,7 @@ const Page = () => {
             lg={6}
             sx={{
               alignItems: 'center',
-              background: 'radial-gradient(50% 50% at 50% 50%, #122647 0%, #090E23 100%)',
+              backgroundColor: "#000000",
               color: 'white',
               display: 'flex',
               justifyContent: 'center',
@@ -263,38 +258,15 @@ const Page = () => {
             }}
           >
             <Box sx={{ p: 3 }}>
-              <Typography
-                align="center"
-                color="inherit"
-                sx={{
-                  fontSize: '24px',
-                  lineHeight: '32px',
-                  mb: 1
-                }}
-                variant="h1"
-              >
-                Authentication sponsored by&nbsp;
-                <Box
-                  component="span"
-                  sx={{
-                    color: '#15B79E',
-                    borderBottom: '2px solid #15B79E'
-                  }}
-                >
-                  zalter.com
-                </Box>
-              </Typography>
+              <img src={'/static/app_logo_globe.png'} width={'45%'} style={{textAlign: "center", display: "block", margin: "auto"}}/>
               <Typography
                 align="center"
                 sx={{ mb: 3 }}
                 variant="subtitle1"
+                fontSize={32}
               >
-                Create secure, seamless user experiences with Zalter Passwordless Authentication.
+                NetWatch Pro
               </Typography>
-              <img
-                alt=""
-                src="/images/sign-in-illustration.svg"
-              />
             </Box>
           </Grid>
         </Grid>
@@ -303,4 +275,11 @@ const Page = () => {
   );
 };
 
-export default Page;
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+      // Will be passed to the page component as props
+    },
+  };
+}
