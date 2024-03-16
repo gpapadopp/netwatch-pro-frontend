@@ -20,6 +20,12 @@ export default function Footer(){
       >
         <Grid
           item={true}
+          md={12}
+          xs={12}
+        >
+        </Grid>
+        <Grid
+          item={true}
           md={6}
           xs={12}
         >

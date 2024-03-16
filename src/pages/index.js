@@ -14,6 +14,7 @@ import Footer from '@/components/public/Footer';
 import { useTranslation } from 'next-i18next';
 import CheckIcon from '@mui/icons-material/Check';
 import { useRouter } from 'next/router';
+import SuperiorDefenceItem from '@/components/public/index-page/SuperiorDefenceItem';
 
 export default function IndexPage(){
   const { t } = useTranslation('common')
@@ -312,22 +313,87 @@ export default function IndexPage(){
           md={12}
           xs={12}
         >
+          <br/>
+        </Grid>
+        <Grid
+          item={true}
+          md={12}
+          xs={12}
+          textAlign={'center'}
+        >
+          <Typography
+            variant={'h6'}
+          >
+            {t('superior_defense_for_android_devices')}
+          </Typography>
+          <Typography
+            variant={'span'}
+            style={{marginTop: "1%", display: "block"}}
+          >
+            {t('netwatch_provides_cybersecurity_for_all_users')}
+          </Typography>
+        </Grid>
+        <Grid
+          item={true}
+          md={3}
+          xs={3}
+        >
+        </Grid>
+        <Grid
+          item={true}
+          md={6}
+          xs={6}
+        >
+          <Grid
+            container={true}
+            spacing={2}
+          >
+            <Grid
+              item={true}
+              md={4}
+              xs={4}
+            >
+              <SuperiorDefenceItem
+                topImageURL={'/static/security_shield_banner_remove_bg.png'}
+                mainTitle={t('security')}
+                secondaryTitle={t('complete_digital_security')}
+              />
+            </Grid>
+            <Grid
+              item={true}
+              md={4}
+              xs={4}
+            >
+              <SuperiorDefenceItem
+                topImageURL={'/static/performace_remove_bg.png'}
+                mainTitle={t('performance')}
+                secondaryTitle={t('optimization_tool_description')}
+              />
+            </Grid>
+            <Grid
+              item={true}
+              md={4}
+              xs={4}
+            >
+              <SuperiorDefenceItem
+                topImageURL={'/static/privacy_banner_remove_bg.png'}
+                mainTitle={t('privacy')}
+                secondaryTitle={t('locks_down_identity')}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid
+          item={true}
+          md={3}
+          xs={3}
+        >
         </Grid>
         <Grid
           item={true}
           md={12}
           xs={12}
         >
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
           <br/>
           <br/>
           <br/>

@@ -21,6 +21,7 @@ export default function HeaderMenu(){
   const [anchorElNav, setAnchorElNav] = useState(null);
   const ref = useRef(null)
   const router = useRouter()
+  const lang = router.locale
 
   const pages = [t('home_page'), 'Blog', t('about_application'), t('privacy_policy'), t('terms_of_use'), t('api_documentation')];
   const urls = ['/', '/blog', '/about', '/privacy-policy', '/terms-of-use', '/api-docs']
@@ -56,6 +57,16 @@ export default function HeaderMenu(){
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  function changeLanguage(languageID){
+    if (languageID === 1){
+      //Change to Greek
+      router.push(router.asPath, router.asPath, { locale: 'el' }).then()
+      return;
+    }
+    //Change to English
+    router.push(router.asPath, router.asPath, { locale: 'en' }).then()
+  }
 
   return (
     <>
@@ -169,8 +180,22 @@ export default function HeaderMenu(){
                 </Button>
               ))}
               <Tooltip title={t('search')} placement={"top"}>
-                <SearchIcon style={{marginTop: "1.6%", cursor: "pointer"}}/>
+                <SearchIcon style={{marginTop: "1.6%", cursor: "pointer", marginRight: "1%"}}/>
               </Tooltip>
+              {(lang === "en") &&
+                <>
+                  <Tooltip title={t('greek')} placement={"top"}>
+                    <img src={'/static/languages/el.svg'} width={'2%'} style={{cursor: "pointer"}} onClick={() => changeLanguage(1)}/>
+                  </Tooltip>
+                </>
+              }
+              {(lang === "el") &&
+                <>
+                  <Tooltip title={t('english')} placement={"top"}>
+                    <img src={'/static/languages/en.svg'} width={'2%'} style={{cursor: "pointer"}} onClick={() => changeLanguage(2)}/>
+                  </Tooltip>
+                </>
+              }
             </Box>
           </Toolbar>
         </Container>
