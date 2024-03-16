@@ -129,6 +129,13 @@ export const theme = createTheme({
           }
         }
       }
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        colorPrimary: {
+          backgroundColor: "#000000"
+        }
+      }
     }
   },
   palette: {

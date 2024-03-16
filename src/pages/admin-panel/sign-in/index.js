@@ -3,7 +3,7 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Box, Button, Grid, Tab, Tabs, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, LinearProgress, Tab, Tabs, TextField, Typography } from '@mui/material';
 import { auth, ENABLE_AUTH } from '@/lib/auth';
 import { Logo } from '@/components/admin/logo';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -12,7 +12,7 @@ import { useTranslation } from 'next-i18next';
 export default function LoginPage(){
   const { t } = useTranslation('common')
   const [tab, setTab] = useState('email');
-  const [emailSent, setEmailSent] = useState(false);
+  const [displayLoading, setDisplayLoading] = useState(false)
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -20,15 +20,28 @@ export default function LoginPage(){
       username: "",
       submit: null
     },
-    validationSchema: Yup.object({
+    validationSchema: Yup.object((tab === "email") ? {
       email: Yup
         .string()
-        .email('Must be a valid email')
+        .email(t('must_be_a_valid_email'))
         .max(255)
-        .required('Email is required')
+        .required(t('email_is_required')),
+      password: Yup
+        .string()
+        .max(255)
+        .required(t('password_is_required'))
+    }: {
+      email: Yup
+        .string()
+        .max(255)
+        .required(t('username_is_required')),
+      password: Yup
+        .string()
+        .max(255)
+        .required(t('password_is_required'))
     }),
     onSubmit: async (values, helpers) => {
-      console.log(values);
+      setDisplayLoading(true)
       // if (!ENABLE_AUTH) {
       //   helpers.setFieldError('submit', 'Zalter authentication not enabled');
       //   helpers.setSubmitting(false);
@@ -230,12 +243,20 @@ export default function LoginPage(){
                     )}
                   </div>
                 )}
+                {displayLoading &&
+                  <>
+                    <br/>
+                    <LinearProgress/>
+                    <br/>
+                  </>
+                }
                 <Button
                   fullWidth
                   size="large"
                   sx={{ mt: 3 }}
                   onClick={() => formik.handleSubmit()}
                   variant="contained"
+                  disabled={displayLoading}
                 >
                   {t('login')}
                 </Button>

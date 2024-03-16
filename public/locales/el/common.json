@@ -7,5 +7,16 @@
   "login_to_have_access_to_the_administration_panel": "Συνδεθείτε για να μπορέσετε να έχετε πρόσβαση στο διαχειριστικό πάνελ",
   "username": "Όνομα Χρήστη",
   "email_address": "Διεύθυνση Email",
-  "password": "Κωδικός Πρόσβασης"
+  "password": "Κωδικός Πρόσβασης",
+  "must_be_a_valid_email": "Το Email πρέπει να είναι έγκυρο",
+  "must_be_a_valid_username": "Το όνομα χρήστη πρέπει να είναι έγκυρο",
+  "email_is_required": "Το Email είναι υποχρεωτικό",
+  "username_is_required": "Το όνομα χρήστη είναι υποχρεωτικό",
+  "password_is_required": "Ο κωδικός πρόσβασης είναι υποχρεωτικός",
+  "home_page": "Αρχική",
+  "about_application": "Περί της Εφαρμογής",
+  "privacy_policy": "Πολιτική Απορρήτου",
+  "terms_of_use": "Όροι Χρήσης",
+  "api_documentation": "Τεκμηρίωση Προγραμματιστών",
+  "search": "Αναζήτηση"
 }

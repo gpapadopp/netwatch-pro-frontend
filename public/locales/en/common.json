@@ -7,5 +7,16 @@
   "login_to_have_access_to_the_administration_panel": "Login to be able to access the admin panel",
   "username": "Username",
   "email_address": "Email Address",
-  "password": "Password"
+  "password": "Password",
+  "must_be_a_valid_email": "Email must be valid",
+  "must_be_a_valid_username": "Username must be valid",
+  "email_is_required": "Email is required",
+  "username_is_required": "Username is required",
+  "password_is_required": "Password is required",
+  "home_page": "Home",
+  "about_application": "About the Application",
+  "privacy_policy": "Privacy Policy",
+  "terms_of_use": "Terms of Use",
+  "api_documentation": "Developers Documentation",
+  "search": "Search"
 }
