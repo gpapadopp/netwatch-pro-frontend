@@ -19,12 +19,11 @@ import { useTranslation } from 'next-i18next';
 export default function HeaderMenu(){
   const { t } = useTranslation('common')
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
   const ref = useRef(null)
   const router = useRouter()
 
   const pages = [t('home_page'), 'Blog', t('about_application'), t('privacy_policy'), t('terms_of_use'), t('api_documentation')];
-  const urls = ['/', '/blog', '/about', 'pricacy-policy', '/terms-of-use', '/api-docs']
+  const urls = ['/', '/blog', '/about', '/privacy-policy', '/terms-of-use', '/api-docs']
 
   useEffect(() => {
     const handleRouteChange = (url) => {
@@ -48,9 +47,6 @@ export default function HeaderMenu(){
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   function handleButtonClick(index){
     setAnchorElNav(null);
@@ -59,10 +55,6 @@ export default function HeaderMenu(){
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
   };
 
   return (
