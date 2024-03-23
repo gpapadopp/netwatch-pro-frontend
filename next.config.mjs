@@ -9,6 +9,7 @@ const nextConfig = {
   publicRuntimeConfig: {
     // Will be available on both server and client
     basicURLPath: 'https://arctouros.ict.ihu.gr/',
+    localURLPath: 'http://127.0.0.1:8000/',
     locales: ['en', 'el'],
     isDebugging: true
   },
