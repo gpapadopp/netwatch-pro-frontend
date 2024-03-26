@@ -5,13 +5,13 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Footer from '@/components/public/Footer';
 
-export default function PrivacyPolicyIndexPage(){
+export default function TermsOfUseIndexPage(){
   const { t } = useTranslation('common')
 
   return (
     <>
       <Head>
-        <title>{t('privacy_policy')} | NetWatch Pro</title>
+        <title>{t('terms_of_use')} | NetWatch Pro</title>
       </Head>
       <HeaderMenu/>
       <Grid
@@ -50,7 +50,7 @@ export default function PrivacyPolicyIndexPage(){
               textAlign: "center"
             }}
           >
-            {t('privacy_policy')}
+            {t('terms_of_use')}
           </Typography>
           <br/>
           <br/>
@@ -86,102 +86,143 @@ export default function PrivacyPolicyIndexPage(){
             variant={'h6'}
             fontWeight={'normal'}
           >
-            {t('privacy_policy_intro_paragraph')}
+            {t('terms_of_use_intro_paragraph')}
           </Typography>
           <br/>
           <Typography
             variant={'h6'}
             fontWeight={'bold'}
           >
-            {t('information_we_collect')}
+            {t('acceptance_of_terms')}
           </Typography>
           <br/>
           <Typography
             variant={'h6'}
             fontWeight={'normal'}
           >
-            {t('personal_information')}
+            {t('acceptance_of_terms_content')}
+          </Typography>
+          <br/>
+          <Typography
+            variant={'h6'}
+            fontWeight={'bold'}
+          >
+            {t('app_description')}
+          </Typography>
+          <br/>
+          <Typography
+            variant={'h6'}
+            fontWeight={'normal'}
+          >
+            {t('app_description_content')}
+          </Typography>
+          <br/>
+          <Typography
+            variant={'h6'}
+            fontWeight={'bold'}
+          >
+            {t('user_responsibilities')}
+          </Typography>
+          <br/>
+          <Typography
+            variant={'h6'}
+            fontWeight={'normal'}
+          >
+            {t('user_responsibilities_content_one')}
             <br/>
-            {t('personal_information_content')}
-          </Typography>
-          <br/>
-          <Typography
-            variant={'h6'}
-            fontWeight={'normal'}
-          >
-            {t('data_collected_for_app_functionality')}
+            {t('user_responsibilities_content_two')}
             <br/>
-            {t('data_collected_content')}
+            {t('user_responsibilities_content_three')}
           </Typography>
           <br/>
           <Typography
             variant={'h6'}
             fontWeight={'bold'}
           >
-            {t('how_we_use_your_information')}
+            {t('use_restrictions')}
           </Typography>
           <br/>
           <Typography
             variant={'h6'}
             fontWeight={'normal'}
           >
-            {t('how_we_use_your_information_content')}
+            {t('you_agree_not_to')}:
+            <br/>
+            {t('use_restrictions_content_one')}
+            <br/>
+            {t('use_restrictions_content_two')}
+            <br/>
+            {t('use_restrictions_content_three')}
           </Typography>
           <br/>
           <Typography
             variant={'h6'}
             fontWeight={'bold'}
           >
-            {t('data_security')}
+            {t('intellectual_property')}
           </Typography>
           <br/>
           <Typography
             variant={'h6'}
             fontWeight={'normal'}
           >
-            {t('data_security_content')}
+            {t('intellectual_property_content')}
           </Typography>
           <br/>
           <Typography
             variant={'h6'}
             fontWeight={'bold'}
           >
-            {t('third_party_services')}
+            {t('disclaimer_of_warranty')}
           </Typography>
           <br/>
           <Typography
             variant={'h6'}
             fontWeight={'normal'}
           >
-            {t('third_party_services_content')}
+            {t('disclaimer_of_warranty_content')}
           </Typography>
           <br/>
           <Typography
             variant={'h6'}
             fontWeight={'bold'}
           >
-            {t('children_privacy')}
+            {t('limitation_of_liability')}
           </Typography>
           <br/>
           <Typography
             variant={'h6'}
             fontWeight={'normal'}
           >
-            {t('children_privacy_content')}
+            {t('limitation_of_liability_content')}
           </Typography>
           <br/>
           <Typography
             variant={'h6'}
             fontWeight={'bold'}
           >
-            {t('changes_to_this_privacy_policy')}
+            {t('changes_to_terms')}
           </Typography>
           <br/>
           <Typography
             variant={'h6'}
             fontWeight={'normal'}
           >
-            {t('changes_to_this_privacy_policy_content')}
+            {t('changes_to_terms_content')}
+          </Typography>
+          <br/>
+          <Typography
+            variant={'h6'}
+            fontWeight={'bold'}
+          >
+            {t('governing_law')}
+          </Typography>
+          <br/>
+          <Typography
+            variant={'h6'}
+            fontWeight={'normal'}
+          >
+            {t('governing_law_content')}
           </Typography>
           <br/>
           <Typography
@@ -195,7 +236,9 @@ export default function PrivacyPolicyIndexPage(){
             variant={'h6'}
             fontWeight={'normal'}
           >
-            {t('contact_information_content')}
+            {t('terms_of_use_footer_content_one')}
+            <br/>
+            {t('terms_of_use_footer_content_two')}
           </Typography>
         </Grid>
         <Grid
