@@ -12,12 +12,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useEffect, useRef, useState } from 'react';
 import NextLink from 'next/link';
 import LoadingBar from 'react-top-loading-bar';
-import SearchIcon from '@mui/icons-material/Search';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
+import getConfig from 'next/config';
 
 export default function HeaderMenu(){
   const { t } = useTranslation('common')
+  const { publicRuntimeConfig } = getConfig()
   const [anchorElNav, setAnchorElNav] = useState(null);
   const ref = useRef(null)
   const router = useRouter()
@@ -25,6 +26,8 @@ export default function HeaderMenu(){
 
   const pages = [t('home_page'), 'Blog', t('about_application'), t('privacy_policy'), t('terms_of_use'), t('api_documentation')];
   const urls = ['/', '/blog', '/about', '/privacy-policy', '/terms-of-use', '/api-docs']
+
+  const docsURL = (publicRuntimeConfig.isDebugging) ? "http://127.0.0.1:8000/docs" : "https://arctouros.ict.ihu.gr/api/docs"
 
   useEffect(() => {
     const handleRouteChange = (url) => {
@@ -51,6 +54,10 @@ export default function HeaderMenu(){
 
   function handleButtonClick(index){
     setAnchorElNav(null);
+    if (index === 5){
+      window.open(docsURL, '_blank')
+      return
+    }
     router.push(urls[index]).then()
   }
 
@@ -179,9 +186,6 @@ export default function HeaderMenu(){
                   {page}
                 </Button>
               ))}
-              <Tooltip title={t('search')} placement={"top"}>
-                <SearchIcon style={{marginTop: "1.6%", cursor: "pointer", marginRight: "1%"}}/>
-              </Tooltip>
               {(lang === "en") &&
                 <>
                   <Tooltip title={t('greek')} placement={"top"}>
