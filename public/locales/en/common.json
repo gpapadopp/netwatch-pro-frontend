@@ -43,5 +43,12 @@
   "see_the_latest_updates_on_this_application": "Check out the latest news for this app",
   "by": "By",
   "read_more": "Read More",
-  "share_this_blog_post": "Share this Blog Post"
+  "share_this_blog_post": "Share this Blog Post",
+  "about_app_content_first_paragraph": "Welcome to NetWatch Pro, the result of extensive research and development by a dedicated team of scholars at the International Hellenic University. Our mission is to enhance mobile security and protect users from the ever-evolving threat of malicious applications.",
+  "about_app_content_second_paragraph": "At NetWatch Pro, we are committed to the pursuit of knowledge and innovation, and we believe that safeguarding your digital life is paramount. Our journey began as a thesis project, and it has evolved into a full-fledged application powered by cutting-edge Machine Learning models. We are proud to have worked tirelessly to create a tool that empowers users to scan and identify potentially harmful apps on their Android devices.",
+  "about_app_content_third_paragraph": "Our team comprises experts in the fields of cybersecurity and machine learning, and we have harnessed the power of these technologies to provide you with a reliable and user-friendly solution. We understand the importance of preserving your privacy and data security, which is why we have designed NetWatch Pro with the highest standards in mind.",
+  "about_app_content_fourth_paragraph": "As we move forward, our commitment to staying ahead of emerging threats remains unwavering. We will continue to refine and expand our application to ensure that you can trust your Android device to be free from malicious software.",
+  "about_app_content_fifth_paragraph": "Thank you for choosing NetWatch Pro to protect your digital world. We are excited to have you on this journey with us, and we look forward to helping you maintain a secure and enjoyable mobile experience.",
+  "sincerely": "Sincerely",
+  "the_netwatch_pro_team": "The NetWatch Pro Team"
 }

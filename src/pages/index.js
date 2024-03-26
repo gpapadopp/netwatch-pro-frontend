@@ -335,18 +335,19 @@ export default function IndexPage(){
         </Grid>
         <Grid
           item={true}
-          md={3}
-          xs={3}
+          md={2}
+          xs={2}
         >
         </Grid>
         <Grid
           item={true}
-          md={6}
-          xs={6}
+          md={8}
+          xs={8}
         >
+          <br/>
           <Grid
             container={true}
-            spacing={2}
+            spacing={4}
           >
             <Grid
               item={true}
@@ -385,8 +386,8 @@ export default function IndexPage(){
         </Grid>
         <Grid
           item={true}
-          md={3}
-          xs={3}
+          md={2}
+          xs={2}
         >
         </Grid>
         <Grid

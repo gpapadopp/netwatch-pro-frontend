@@ -14,6 +14,7 @@ export default function SuperiorDefenceItem({topImageURL, mainTitle, secondaryTi
           xs={12}
           textAlign={'center'}
         >
+          <br/>
           <img src={topImageURL} width={'15%'}/>
         </Grid>
         <Grid
@@ -34,7 +35,7 @@ export default function SuperiorDefenceItem({topImageURL, mainTitle, secondaryTi
           xs={12}
           textAlign={'center'}
         >
-          <Divider variant={'inset'}/>
+          <Divider/>
           <br/>
           <Typography
             variant={'span'}
