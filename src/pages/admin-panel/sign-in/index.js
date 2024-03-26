@@ -4,7 +4,6 @@ import NextLink from 'next/link';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Box, Button, Grid, LinearProgress, Tab, Tabs, TextField, Typography } from '@mui/material';
-import { auth, ENABLE_AUTH } from '@/lib/auth';
 import { Logo } from '@/components/admin/logo';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
@@ -42,29 +41,6 @@ export default function LoginPage(){
     }),
     onSubmit: async (values, helpers) => {
       setDisplayLoading(true)
-      // if (!ENABLE_AUTH) {
-      //   helpers.setFieldError('submit', 'Zalter authentication not enabled');
-      //   helpers.setSubmitting(false);
-      //   return;
-      // }
-      //
-      // try {
-      //   // When in development, this will be 'http://localhost:3000/sign-in/confirm'
-      //   // Remember to configure it in your project settings
-      //   const redirectUri = window.location.href + '/confirm';
-      //
-      //   // This can be call inside AuthProvider component, but we do it here for simplicity
-      //   await auth.signInWithLink('start', {
-      //     email: values.email,
-      //     redirectUri
-      //   });
-      //   helpers.setSubmitting(false);
-      //   setEmailSent(true);
-      // } catch (err) {
-      //   console.error(err);
-      //   helpers.setFieldError('submit', err.message || 'Something went wrong');
-      //   helpers.setSubmitting(false);
-      // }
     }
   });
 
@@ -113,12 +89,8 @@ export default function LoginPage(){
                 passHref
               >
                 <a>
-                  <Logo
-                    sx={{
-                      height: 42,
-                      width: 42
-                    }}
-                  />
+                  <img src={'/static/app_logo_globe_removed_bg.png'} width={'8%'}
+                       style={{ textAlign: 'left', display: 'block' }}/>
                 </a>
               </NextLink>
             </Box>
