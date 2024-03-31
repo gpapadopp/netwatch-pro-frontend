@@ -94,5 +94,7 @@
   "governing_law": "Governing Law",
   "governing_law_content": "These Terms are governed by and construed in accordance with the laws of GNU, without regard to its conflict of law principles.",
   "terms_of_use_footer_content_one": "If you have any questions or concerns about these Terms or the App, please contact us at info@ict.ihu.gr.",
-  "terms_of_use_footer_content_two": "By using the \"NetWatch Pro\" App, you acknowledge that you have read, understood, and agreed to these Terms of Use. If you do not agree with any part of these Terms, please do not use the App."
+  "terms_of_use_footer_content_two": "By using the \"NetWatch Pro\" App, you acknowledge that you have read, understood, and agreed to these Terms of Use. If you do not agree with any part of these Terms, please do not use the App.",
+  "wrong_credentials": "Wrong Credentials",
+  "your_username_email_or_password_is_wrong": "Your username/Email and/or password are incorrect"
 }

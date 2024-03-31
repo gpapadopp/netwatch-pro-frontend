@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useFormik } from 'formik';
@@ -7,11 +7,27 @@ import { Box, Button, Grid, LinearProgress, Tab, Tabs, TextField, Typography } f
 import { Logo } from '@/components/admin/logo';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import getConfig from 'next/config';
+import { useCookies } from 'react-cookie';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { isJwtExpired } from 'jwt-check-expiration';
+import LoginPageWrongCredsDialog from '@/components/admin/login/wrong-creds-dialog';
 
 export default function LoginPage(){
   const { t } = useTranslation('common')
+  const router = useRouter()
+  const { publicRuntimeConfig } = getConfig()
+
+  const [firstLoad, setFirstLoad] = useState(true)
   const [tab, setTab] = useState('email');
+
   const [displayLoading, setDisplayLoading] = useState(false)
+  const [displayWrongCredsDialog, setDisplayWrongCredsDialog] = useState(false)
+  const [cookies, setCookie, removeCookie] = useCookies(['user_jwt']);
+
+  const baseURL = (publicRuntimeConfig.isDebugging) ? "/local-run/v1/users/" : '/api/users/'
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -24,13 +40,13 @@ export default function LoginPage(){
         .string()
         .email(t('must_be_a_valid_email'))
         .max(255)
-        .required(t('email_is_required')),
+        .required(t('username_is_required')),
       password: Yup
         .string()
         .max(255)
         .required(t('password_is_required'))
     }: {
-      email: Yup
+      username: Yup
         .string()
         .max(255)
         .required(t('username_is_required')),
@@ -39,10 +55,94 @@ export default function LoginPage(){
         .max(255)
         .required(t('password_is_required'))
     }),
-    onSubmit: async (values, helpers) => {
+    onSubmit: () => {
       setDisplayLoading(true)
+      if (tab === "email"){
+        loginEmail()
+      } else {
+        loginUsername()
+      }
     }
   });
+
+  useEffect(() => {
+    if (firstLoad){
+      if (cookies.user_jwt !== undefined && cookies.user_jwt !== null){
+        if (!isJwtExpired(cookies.user_jwt)){
+          router.push("/admin-panel/").then()
+        }
+      }
+      setFirstLoad(false)
+    }
+  }, []);
+
+  function loginEmail(){
+    const axios = require('axios');
+    const qs = require('qs');
+    let data = qs.stringify({
+      'email': formik.values.email,
+      'password': formik.values.password
+    });
+
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: baseURL + 'login-email',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data : data
+    };
+
+    axios.request(config)
+         .then((response) => {
+           const allResponse = response.data
+           if (allResponse["authentication"] === null){
+             setDisplayLoading(false)
+             setDisplayWrongCredsDialog(true)
+             return
+           }
+           setCookie("user_jwt", allResponse["authentication"]["token"])
+           router.push("/admin-panel/").then()
+         })
+         .catch((error) => {
+           console.log(error);
+         });
+  }
+
+  function loginUsername(){
+    const axios = require('axios');
+    const qs = require('qs');
+    let data = qs.stringify({
+      'username': formik.values.username,
+      'password': formik.values.password
+    });
+
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: baseURL + 'login',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data : data
+    };
+
+    axios.request(config)
+         .then((response) => {
+           const allResponse = response.data
+           if (allResponse["authentication"] === null){
+             setDisplayLoading(false)
+             setDisplayWrongCredsDialog(true)
+             return
+           }
+           setCookie("user_jwt", allResponse["authentication"]["token"])
+           router.push("/admin-panel/").then()
+         })
+         .catch((error) => {
+           console.log(error);
+         });
+  }
 
   const handleTabChange = (event, value) => {
     setTab(value);
@@ -263,6 +363,11 @@ export default function LoginPage(){
             </Box>
           </Grid>
         </Grid>
+        {displayWrongCredsDialog &&
+          <LoginPageWrongCredsDialog
+            agreeClick={() => setDisplayWrongCredsDialog(false)}
+          />
+        }
       </Box>
     </>
   );
