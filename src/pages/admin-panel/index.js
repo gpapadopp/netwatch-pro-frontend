@@ -10,13 +10,15 @@ import { TotalProfit } from '@/components/admin/dashboard/total-profit';
 import { TrafficByDevice } from '@/components/admin/dashboard/traffic-by-device';
 import { DashboardLayout } from '@/components/admin/dashboard-layout';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 export default function Page(){
+  const { t } = useTranslation('common')
   return (
     <>
       <Head>
         <title>
-          Dashboard | Material Kit
+          {t('admin_panel')} | NetWatch Pro
         </title>
       </Head>
       <Box
@@ -38,7 +40,7 @@ export default function Page(){
               xl={3}
               xs={12}
             >
-              <Budget />
+              {/*<Budget />*/}
             </Grid>
             <Grid
               item
@@ -47,7 +49,7 @@ export default function Page(){
               sm={6}
               xs={12}
             >
-              <TotalCustomers />
+              {/*<TotalCustomers />*/}
             </Grid>
             <Grid
               item
@@ -56,7 +58,7 @@ export default function Page(){
               sm={6}
               xs={12}
             >
-              <TasksProgress />
+              {/*<TasksProgress />*/}
             </Grid>
             <Grid
               item
@@ -65,7 +67,7 @@ export default function Page(){
               sm={6}
               xs={12}
             >
-              <TotalProfit sx={{ height: '100%' }} />
+              {/*<TotalProfit sx={{ height: '100%' }} />*/}
             </Grid>
             <Grid
               item
@@ -74,7 +76,7 @@ export default function Page(){
               xl={9}
               xs={12}
             >
-              <Sales />
+              {/*<Sales />*/}
             </Grid>
             <Grid
               item
@@ -83,7 +85,7 @@ export default function Page(){
               xl={3}
               xs={12}
             >
-              <TrafficByDevice sx={{ height: '100%' }} />
+              {/*<TrafficByDevice sx={{ height: '100%' }} />*/}
             </Grid>
             <Grid
               item
@@ -92,7 +94,7 @@ export default function Page(){
               xl={3}
               xs={12}
             >
-              <LatestProducts sx={{ height: '100%' }} />
+              {/*<LatestProducts sx={{ height: '100%' }} />*/}
             </Grid>
             <Grid
               item
@@ -101,7 +103,7 @@ export default function Page(){
               xl={9}
               xs={12}
             >
-              <LatestOrders />
+              {/*<LatestOrders />*/}
             </Grid>
           </Grid>
         </Container>

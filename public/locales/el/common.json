@@ -96,5 +96,17 @@
   "terms_of_use_footer_content_one": "Εάν έχετε οποιεσδήποτε ερωτήσεις ή ανησυχίες σχετικά με αυτούς τους Όρους ή την Εφαρμογή, επικοινωνήστε μαζί μας στο info@ict.ihu.gr.",
   "terms_of_use_footer_content_two": "Χρησιμοποιώντας την εφαρμογή \"NetWatch Pro\", αναγνωρίζετε ότι έχετε διαβάσει, κατανοήσει και συμφωνήσει σε αυτούς τους Όρους Χρήσης. Εάν δεν συμφωνείτε με οποιοδήποτε μέρος αυτών των Όρων, παρακαλούμε μην χρησιμοποιήσετε το App.",
   "wrong_credentials": "Λάθος Διαπιστευτήρια",
-  "your_username_email_or_password_is_wrong": "Το όνομα χρήστη/Email ή/και ο κωδικός πρόσβασης σας είναι λανθασμένα"
+  "your_username_email_or_password_is_wrong": "Το όνομα χρήστη/Email ή/και ο κωδικός πρόσβασης σας είναι λανθασμένα",
+  "admin_panel": "Πίνακας Ελέγχου",
+  "user": "Χρήστης",
+  "logout": "Αποσύνδεση",
+  "welcome_back": "Καλώς Ήρθες",
+  "access_tokens": "Άδειες Πρόσβασης",
+  "blog_posts": "Άρθρα",
+  "internet_packages": "Πακέτα Διαδικτύου",
+  "malicious_files_signatures": "Υπογραφές Κακοηθών Αρχείων",
+  "notifications": "Ειδοποιήσεις",
+  "package_apks": "APK Εφαρμογών",
+  "package_permissions": "Άδειες Εφαρμογών",
+  "users": "Χρήστες"
 }

@@ -1,13 +1,18 @@
 import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { AppBar, Avatar, Badge, Box, IconButton, Toolbar, Tooltip } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  IconButton,
+  Toolbar,
+  Typography
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import { Bell as BellIcon } from '../../icons/bell';
-import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
-import { Users as UsersIcon } from '../../icons/users';
 import { AccountPopover } from './account-popover';
+import { useTranslation } from 'next-i18next';
+import { useCookies } from 'react-cookie';
+import { jwtDecode } from 'jwt-decode';
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -15,9 +20,16 @@ const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 }));
 
 export const DashboardNavbar = (props) => {
+  const { t } = useTranslation('common')
   const { onSidebarOpen, ...other } = props;
   const settingsRef = useRef(null);
   const [openAccountPopover, setOpenAccountPopover] = useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies(['user_jwt']);
+
+  function getUserName(){
+    const decodedUser = jwtDecode(cookies.user_jwt)
+    return decodedUser["first_name"] + " " + decodedUser["last_name"]
+  }
 
   return (
     <>
@@ -50,41 +62,15 @@ export const DashboardNavbar = (props) => {
           >
             <MenuIcon fontSize="small" />
           </IconButton>
-          <Tooltip title="Search">
-            <IconButton sx={{ ml: 1 }}>
-              <SearchIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
           <Box sx={{ flexGrow: 1 }} />
-          <Tooltip title="Contacts">
-            <IconButton sx={{ ml: 1 }}>
-              <UsersIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Notifications">
-            <IconButton sx={{ ml: 1 }}>
-              <Badge
-                badgeContent={4}
-                color="primary"
-                variant="dot"
-              >
-                <BellIcon fontSize="small" />
-              </Badge>
-            </IconButton>
-          </Tooltip>
-          <Avatar
-            onClick={() => setOpenAccountPopover(true)}
+          <Typography
+            variant={'span'}
+            color={'black'}
             ref={settingsRef}
-            sx={{
-              cursor: 'pointer',
-              height: 40,
-              width: 40,
-              ml: 1
-            }}
-            src="/static/images/avatars/avatar_1.png"
+            onClick={() => setOpenAccountPopover(true)}
           >
-            <UserCircleIcon fontSize="small" />
-          </Avatar>
+            {t('welcome_back')}, <i><b>{getUserName()}</b></i>
+          </Typography>
         </Toolbar>
       </DashboardNavbarRoot>
       <AccountPopover

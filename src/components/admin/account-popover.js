@@ -1,31 +1,28 @@
-import { useContext } from 'react';
-import Router from 'next/router';
 import PropTypes from 'prop-types';
 import { Box, MenuItem, MenuList, Popover, Typography } from '@mui/material';
-import { auth } from '@/lib/auth';
+import { useTranslation } from 'next-i18next';
+import { useCookies } from 'react-cookie';
+import { jwtDecode } from 'jwt-decode';
+import { useRouter } from 'next/router';
 
 export const AccountPopover = (props) => {
+  const { t } = useTranslation('common')
   const { anchorEl, onClose, open, ...other } = props;
-  const authContext = useContext(AuthContext);
+
+  const router = useRouter()
+  const [cookies, setCookie, removeCookie] = useCookies(['user_jwt']);
 
   const handleSignOut = async () => {
     onClose?.();
 
-    // try {
-    //   // This can be call inside AuthProvider component, but we do it here for simplicity
-    //   await auth.signOut();
-    //
-    //   // Update Auth Context state
-    //   authContext.signOut();
-    //
-    //   // Redirect to sign-in page
-    //   Router
-    //     .push('/sign-in')
-    //     .catch(console.error);
-    // } catch (err) {
-    //   console.error(err);
-    // }
+    removeCookie("user_jwt")
+    router.push("/").then()
   };
+
+  function getUserName(){
+    const decodedUser = jwtDecode(cookies.user_jwt)
+    return decodedUser["first_name"] + " " + decodedUser['last_name']
+  }
 
   return (
     <Popover
@@ -48,13 +45,13 @@ export const AccountPopover = (props) => {
         }}
       >
         <Typography variant="overline">
-          Account
+          {t('user')}
         </Typography>
         <Typography
           color="text.secondary"
           variant="body2"
         >
-          John Doe
+          {getUserName()}
         </Typography>
       </Box>
       <MenuList
@@ -71,7 +68,7 @@ export const AccountPopover = (props) => {
         }}
       >
         <MenuItem onClick={handleSignOut}>
-          Sign out
+          {t('logout')}
         </MenuItem>
       </MenuList>
     </Popover>

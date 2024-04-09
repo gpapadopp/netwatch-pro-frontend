@@ -6,7 +6,15 @@ import { Box, Button, ListItem } from '@mui/material';
 export const NavItem = (props) => {
   const { href, icon, title, ...others } = props;
   const router = useRouter();
-  const active = href ? (router.pathname === href) : false;
+
+  let active = false
+  const allPaths = href.split("|*&*|")
+  for (let path in allPaths){
+    if (allPaths[path] === router.pathname){
+      active = true
+      break
+    }
+  }
 
   return (
     <ListItem
