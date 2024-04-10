@@ -122,5 +122,16 @@
   "are_you_sure_you_want_to_delete_the_access_token_with_id": "Are you sure you want to delete the access token with ID",
   "delete_access_token": "Delete Access Token",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "is_disabled": "Is Disabled",
+  "access_token_details": "Access Token Details",
+  "edit_access_token": "Edit Access Token",
+  "internet_package_model": "Internet Packages Model",
+  "notifications_model": "Notifications Model",
+  "package_apks_model": "Package APKs Model",
+  "package_permissions_model": "Package Permissions Model",
+  "access_tokens_model": "Access Tokens Model",
+  "access_models": "Access Models",
+  "api_key": "API Key",
+  "secret_key": "Secret Key"
 }

@@ -15,6 +15,8 @@ import { useTranslation } from 'next-i18next';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import DeleteAccessTokenDialog from '@/components/admin/access-tokens/dialogs/delete';
@@ -132,7 +134,16 @@ export default function AccessTokensListResults({ allAccessTokens, totalResults,
                       <TableCell
                         align={"center"}
                       >
-                        {singleAccessToken.purpose}
+                        {(singleAccessToken.disabled) &&
+                          <Tooltip title={t('is_disabled')} placement={"top"}>
+                            <CloseIcon/>
+                          </Tooltip>
+                        }
+                        {(!singleAccessToken.disabled) &&
+                          <Tooltip title={t('is_enabled')} placement={"top"}>
+                            <CheckIcon/>
+                          </Tooltip>
+                        }
                       </TableCell>
                       <TableCell
                         align={"center"}

@@ -122,5 +122,16 @@
   "are_you_sure_you_want_to_delete_the_access_token_with_id": "Είστε σίγουρος ότι θέλετε να διαγράψετε την άδεια πρόσβασης με ID",
   "delete_access_token": "Διαγραφή Άδειας Πρόσβασης",
   "yes": "Ναι",
-  "no": "Όχι"
+  "no": "Όχι",
+  "is_disabled": "Είναι Ανενεργό",
+  "access_token_details": "Λεπτομέρειες Άδειας Πρόσβασης",
+  "edit_access_token": "Επεξεργασία Άδειας Πρόσβασης",
+  "internet_package_model": "Μοντέλο Πακέτων Διαδικτύου",
+  "notifications_model": "Μοντέλο Ειδοποιήσεων",
+  "package_apks_model": "Μοντέλο APK Εφαρμογών",
+  "package_permissions_model": "Μοντέλο Αδειών Εφαρμογών",
+  "access_tokens_model": "Μοντέλο Αδειών Πρόσβασης",
+  "access_models": "Μοντέλα Πρόσβασης",
+  "api_key": "Κλειδί Πρόσβασης",
+  "secret_key": "Μυστικό Κλειδί"
 }

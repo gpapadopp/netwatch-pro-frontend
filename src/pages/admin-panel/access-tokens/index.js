@@ -2,7 +2,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { Box, Container, Divider, Grid } from '@mui/material';
+import { Box, Container, Divider, Grid, LinearProgress } from '@mui/material';
 import AccessTokensListToolbar from '@/components/admin/access-tokens/access-tokens-list-toolbar';
 import { DashboardLayout } from '@/components/admin/dashboard-layout';
 import { useCookies } from 'react-cookie';
@@ -109,15 +109,24 @@ export default function AccessTokensIndexPage(){
               md={12}
               xs={12}
             >
-              <AccessTokensListResults
-                allAccessTokens={allAccessToken}
-                totalResults={allResults}
-                page={currentPage}
-                onPageChange={onPageChange}
-                limit={currentLimit}
-                onLimitChange={onLimitChange}
-                refreshData={onRefreshData}
-              />
+              {(displayLoading) &&
+                <>
+                  <LinearProgress/>
+                </>
+              }
+              {(!displayLoading) &&
+                <>
+                  <AccessTokensListResults
+                    allAccessTokens={allAccessToken}
+                    totalResults={allResults}
+                    page={currentPage}
+                    onPageChange={onPageChange}
+                    limit={currentLimit}
+                    onLimitChange={onLimitChange}
+                    refreshData={onRefreshData}
+                  />
+                </>
+              }
             </Grid>
           </Grid>
         </Container>
