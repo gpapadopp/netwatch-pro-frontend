@@ -114,72 +114,68 @@ export default function AccessTokensListResults({ allAccessTokens, totalResults,
               </TableRow>
             </TableHead>
             <TableBody>
-              {allAccessTokens.map((singleAccessToken) => {
-                return (
-                  <>
-                    <TableRow
-                      key={singleAccessToken.id}
-                      hover
-                    >
-                      <TableCell
-                        align={"center"}
-                      >
-                        {singleAccessToken.id}
-                      </TableCell>
-                      <TableCell
-                        align={"center"}
-                      >
-                        {singleAccessToken.issuer}
-                      </TableCell>
-                      <TableCell
-                        align={"center"}
-                      >
-                        {(singleAccessToken.disabled) &&
-                          <Tooltip title={t('is_disabled')} placement={"top"}>
-                            <CloseIcon/>
-                          </Tooltip>
-                        }
-                        {(!singleAccessToken.disabled) &&
-                          <Tooltip title={t('is_enabled')} placement={"top"}>
-                            <CheckIcon/>
-                          </Tooltip>
-                        }
-                      </TableCell>
-                      <TableCell
-                        align={"center"}
-                      >
-                        {formatDate(singleAccessToken.created_at)}
-                      </TableCell>
-                      <TableCell
-                        align={"center"}
-                      >
-                        {formatDate(singleAccessToken.active_until)}
-                      </TableCell>
-                      <TableCell
-                        align={'center'}
-                      >
-                        <Grid container spacing={2}>
-                          <Grid item xs={4}>
-                            <Tooltip title={t('view')} placement={"top"}>
-                              <RemoveRedEyeIcon style={{cursor: "pointer"}} onClick={() => router.push("/admin-panel/access-token/" + singleAccessToken.id)}/>
-                            </Tooltip>
-                          </Grid>
-                          <Grid item xs={4}>
-                            <Tooltip title={t('edit')} placement={"top"}>
-                              <ModeEditIcon style={{cursor: "pointer"}} onClick={() => router.push("/admin-panel/access-token/" + singleAccessToken.id + "/edit")}/>
-                            </Tooltip>
-                          </Grid>
-                          <Grid item xs={4}>
-                            <Tooltip title={t('delete')} placement={"top"}>
-                              <DeleteIcon style={{cursor: "pointer"}} onClick={() => deleteAccessTokenDialog(singleAccessToken.id)}/>
-                            </Tooltip>
-                          </Grid>
-                        </Grid>
-                      </TableCell>
-                    </TableRow>
-                  </>
-                )
-              })}
+              {allAccessTokens.map((singleAccessToken) => (
+                <TableRow
+                  key={singleAccessToken.id}
+                  hover
+                >
+                  <TableCell
+                    align={"center"}
+                  >
+                    {singleAccessToken.id}
+                  </TableCell>
+                  <TableCell
+                    align={"center"}
+                  >
+                    {singleAccessToken.issuer}
+                  </TableCell>
+                  <TableCell
+                    align={"center"}
+                  >
+                    {(singleAccessToken.disabled) &&
+                      <Tooltip title={t('is_disabled')} placement={"top"}>
+                        <CloseIcon/>
+                      </Tooltip>
+                    }
+                    {(!singleAccessToken.disabled) &&
+                      <Tooltip title={t('is_enabled')} placement={"top"}>
+                        <CheckIcon/>
+                      </Tooltip>
+                    }
+                  </TableCell>
+                  <TableCell
+                    align={"center"}
+                  >
+                    {formatDate(singleAccessToken.created_at)}
+                  </TableCell>
+                  <TableCell
+                    align={"center"}
+                  >
+                    {formatDate(singleAccessToken.active_until)}
+                  </TableCell>
+                  <TableCell
+                    align={'center'}
+                  >
+                    <Grid container spacing={2}>
+                      <Grid item xs={4}>
+                        <Tooltip title={t('view')} placement={"top"}>
+                          <RemoveRedEyeIcon style={{cursor: "pointer"}} onClick={() => router.push("/admin-panel/access-token/" + singleAccessToken.id)}/>
+                        </Tooltip>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Tooltip title={t('edit')} placement={"top"}>
+                          <ModeEditIcon style={{cursor: "pointer"}} onClick={() => router.push("/admin-panel/access-token/" + singleAccessToken.id + "/edit")}/>
+                        </Tooltip>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Tooltip title={t('delete')} placement={"top"}>
+                          <DeleteIcon style={{cursor: "pointer"}} onClick={() => deleteAccessTokenDialog(singleAccessToken.id)}/>
+                        </Tooltip>
+                      </Grid>
+                    </Grid>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </Box>

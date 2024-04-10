@@ -68,7 +68,7 @@ export default function AccessTokensIndexPage(){
   }
 
   function onRefreshData(){
-    getAccessTokens(currentLimit, currentPage)
+    location.reload()
   }
 
   return (
@@ -117,6 +117,7 @@ export default function AccessTokensIndexPage(){
               {(!displayLoading) &&
                 <>
                   <AccessTokensListResults
+                    key={1}
                     allAccessTokens={allAccessToken}
                     totalResults={allResults}
                     page={currentPage}
