@@ -108,5 +108,19 @@
   "notifications": "Notifications",
   "package_apks": "Package APKs",
   "package_permissions": "Package Permissions",
-  "users": "Users"
+  "users": "Users",
+  "add_access_token": "Add Access Token",
+  "issuer": "Issuer",
+  "purpose": "Purpose",
+  "is_enabled": "Is Enabled",
+  "active_until": "Active Until",
+  "active_since": "Active Since",
+  "actions": "Actions",
+  "view": "View",
+  "edit": "Edit",
+  "delete": "Delete",
+  "are_you_sure_you_want_to_delete_the_access_token_with_id": "Are you sure you want to delete the access token with ID",
+  "delete_access_token": "Delete Access Token",
+  "yes": "Yes",
+  "no": "No"
 }

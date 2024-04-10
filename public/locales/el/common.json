@@ -108,5 +108,19 @@
   "notifications": "Ειδοποιήσεις",
   "package_apks": "APK Εφαρμογών",
   "package_permissions": "Άδειες Εφαρμογών",
-  "users": "Χρήστες"
+  "users": "Χρήστες",
+  "add_access_token": "Προσθήκη Άδειας Πρόσβασης",
+  "issuer": "Εκδότης",
+  "purpose": "Σκοπός",
+  "is_enabled": "Είναι Ενεργό",
+  "active_until": "Ενεργό Έως",
+  "active_since": "Ενεργό Από",
+  "actions": "Ενέργειες",
+  "view": "Προβολή",
+  "edit": "Επεξεργασία",
+  "delete": "Διαγραφή",
+  "are_you_sure_you_want_to_delete_the_access_token_with_id": "Είστε σίγουρος ότι θέλετε να διαγράψετε την άδεια πρόσβασης με ID",
+  "delete_access_token": "Διαγραφή Άδειας Πρόσβασης",
+  "yes": "Ναι",
+  "no": "Όχι"
 }

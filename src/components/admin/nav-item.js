@@ -28,7 +28,7 @@ export const NavItem = (props) => {
       {...others}
     >
       <NextLink
-        href={href}
+        href={href.split("|*&*|")[0]}
         passHref
       >
         <Button

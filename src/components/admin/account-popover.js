@@ -15,7 +15,7 @@ export const AccountPopover = (props) => {
   const handleSignOut = async () => {
     onClose?.();
 
-    removeCookie("user_jwt")
+    removeCookie(cookies.user_jwt)
     router.push("/").then()
   };
 

@@ -26,47 +26,47 @@ export const DashboardSidebar = (props) => {
 
   const items = [
     {
-      href: '/',
+      href: '/admin-panel',
       icon: (<ChartBarIcon fontSize="small" />),
       title: t('admin_panel')
     },
     {
-      href: '/access-tokens|*&*|/access-token/[id]|*&*|/access-token/[id]/edit|*&*|/access-token/add',
+      href: '/admin-panel/access-tokens|*&*|/admin-panel/access-token/[id]|*&*|/admin-panel/access-token/[id]/edit|*&*|/admin-panel/access-token/add',
       icon: (<VpnKeyIcon fontSize="small" />),
       title: t('access_tokens')
     },
     {
-      href: '/blog-posts|*&*|/blog-post/[id]|*&*|/blog-post/[id]/edit|*&*|/blog-post/add',
+      href: '/admin-panel/blog-posts|*&*|/admin-panel/blog-post/[id]|*&*|/admin-panel/blog-post/[id]/edit|*&*|/admin-panel/blog-post/add',
       icon: (<RssFeedIcon fontSize="small" />),
       title: t('blog_posts')
     },
     {
-      href: '/internet-packages|*&*|/internet-package/[id]|*&*|/internet-package/[id]/edit|*&*|/internet-package/add',
+      href: '/admin-panel/internet-packages|*&*|/admin-panel/internet-package/[id]|*&*|/admin-panel/internet-package/[id]/edit|*&*|/admin-panel/internet-package/add',
       icon: (<SyncAltIcon fontSize="small" />),
       title: t('internet_packages')
     },
     {
-      href: '/malicious-files-signatures|*&*|malicious-files-signature/[id]|*&*|malicious-files-signature/[id]/edit|*&*|malicious-files-signature/add',
+      href: '/admin-panel/malicious-files-signatures|*&*|/admin-panel/malicious-files-signature/[id]|*&*|/admin-panel/malicious-files-signature/[id]/edit|*&*|/admin-panel/malicious-files-signature/add',
       icon: (<DescriptionIcon fontSize="small" />),
       title: t('malicious_files_signatures')
     },
     {
-      href: '/notifications|*&*|/notification/[id]|*&*|notification/[id]/edit|*&*|/notification/add',
+      href: '/admin-panel/notifications|*&*|/admin-panel/notification/[id]|*&*|/admin-panel/notification/[id]/edit|*&*|/admin-panel/notification/add',
       icon: (<NotificationsIcon fontSize="small" />),
       title: t('notifications')
     },
     {
-      href: '/package-apks|*&*|/package-apk/[id]|*&*|//package-apk/[id]/edit|*&*|/package-apk/add',
+      href: '/admin-panel/package-apks|*&*|/admin-panel/package-apk/[id]|*&*|/admin-panel/package-apk/[id]/edit|*&*|/admin-panel/package-apk/add',
       icon: (<AndroidIcon fontSize="small" />),
       title: t('package_apks')
     },
     {
-      href: '/package-permissions|*&*|/package-permission/[id]|*&*|/package-permission/[id]/edit|*&*|/package-permission/add',
+      href: '/admin-panel/package-permissions|*&*|/admin-panel/package-permission/[id]|*&*|/admin-panel/package-permission/[id]/edit|*&*|/admin-panel/package-permission/add',
       icon: (<BadgeIcon fontSize="small" />),
       title: t('package_permissions')
     },
     {
-      href: '/users|*&*|/user/[id]|*&*|/user/[id]/edit|*&*|/user/add',
+      href: '/admin-panel/users|*&*|/admin-panel/user/[id]|*&*|/admin-panel/user/[id]/edit|*&*|/admin-panel/user/add',
       icon: (<GroupIcon fontSize="small" />),
       title: t('users')
     }

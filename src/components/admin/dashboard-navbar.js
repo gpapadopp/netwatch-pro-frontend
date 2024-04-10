@@ -68,6 +68,7 @@ export const DashboardNavbar = (props) => {
             color={'black'}
             ref={settingsRef}
             onClick={() => setOpenAccountPopover(true)}
+            style={{cursor: "pointer"}}
           >
             {t('welcome_back')}, <i><b>{getUserName()}</b></i>
           </Typography>
