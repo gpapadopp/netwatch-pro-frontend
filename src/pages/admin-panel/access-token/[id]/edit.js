@@ -46,7 +46,7 @@ function getStyles(name, personName, theme) {
   };
 }
 
-function AccessTokenIDPage({id}){
+function AccessTokenIDEditPage({id}){
   const { t } = useTranslation('common')
   const theme = useTheme()
   const { publicRuntimeConfig } = getConfig()
@@ -138,6 +138,56 @@ function AccessTokenIDPage({id}){
     return ""
   }
 
+  function generateAccessModelsRequest(){
+    let accessModelsToReturn = []
+    for (let i = 0; i<accessModels.length; i++){
+      if (accessModels[i] === "internet_packages_model"){
+        accessModelsToReturn.push("InternetPackagesModel")
+      } else if (accessModels[i] === "notifications_model"){
+        accessModelsToReturn.push("Notifications")
+      } else if (accessModels[i] === "package_apks_model"){
+        accessModelsToReturn.push("PackageAPKsModel")
+      } else if (accessModels[i] === "package_permissions_model"){
+        accessModelsToReturn.push("PackagePermissionsModel")
+      } else if (accessModels[i] === "access_tokens_model"){
+        accessModelsToReturn.push("AccessTokensModel")
+      }
+    }
+    return accessModelsToReturn
+  }
+
+  function onSaveClick(){
+    const axios = require('axios');
+    const qs = require('qs');
+    const baseURL = (publicRuntimeConfig.isDebugging) ? "http://127.0.0.1:8000/v1/" : 'https://arctouros.ict.ihu.gr/api/v1/api/'
+    let data = qs.stringify({
+      'issuer': issuer,
+      'purpose': purpose,
+      'disabled': (disabled) ? "True": "False",
+      'access_models': generateAccessModelsRequest().join(",")
+    });
+
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: baseURL + 'access-tokens/' + id,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + cookies.user_jwt
+      },
+      data : data
+    };
+
+    axios.request(config)
+         .then((response) => {
+           const allResponse = response.data
+           router.push("/admin-panel/access-token/" + id).then()
+         })
+         .catch((error) => {
+           console.log(error);
+         });
+  }
+
   return (
     <>
       <Head>
@@ -169,19 +219,6 @@ function AccessTokenIDPage({id}){
               >
                 {t('access_token_details')}
               </Typography>
-            </Grid>
-            <Grid
-              item={true}
-              md={12}
-              xs={12}
-              align={'center'}
-            >
-              <Button
-                variant={"contained"}
-                onClick={() => router.push('/admin-panel/access-token/' + id + "/edit")}
-              >
-                {t('edit_access_token')}
-              </Button>
             </Grid>
             <Grid
               item={true}
@@ -228,7 +265,7 @@ function AccessTokenIDPage({id}){
                     value={issuer}
                     required={true}
                     fullWidth={true}
-                    disabled={true}
+                    onChange={(e) => setIssuer(e.target.value)}
                   />
                 </Grid>
                 <Grid
@@ -241,7 +278,7 @@ function AccessTokenIDPage({id}){
                     value={purpose}
                     required={true}
                     fullWidth={true}
-                    disabled={true}
+                    onChange={(e) => setPurpose(e.target.value)}
                   />
                 </Grid>
                 <Grid
@@ -250,7 +287,7 @@ function AccessTokenIDPage({id}){
                   xs={6}
                 >
                   <FormControlLabel control={
-                    <Checkbox checked={!disabled} disabled={true} />
+                    <Checkbox checked={!disabled} onChange={(e) => setDisabled(e.target.checked)} />
                   } label={t('is_enabled')} />
                 </Grid>
                 <Grid
@@ -269,7 +306,7 @@ function AccessTokenIDPage({id}){
                     value={formatDateTime(createdAt)}
                     required={true}
                     fullWidth={true}
-                    disabled={true}
+                    onChange={(e) => setCreatedAt(e.target.value)}
                   />
                 </Grid>
                 <Grid
@@ -282,7 +319,7 @@ function AccessTokenIDPage({id}){
                     value={formatDateTime(activeUntil)}
                     required={true}
                     fullWidth={true}
-                    disabled={true}
+                    onChange={(e) => setActiveUntil(e.target.value)}
                   />
                 </Grid>
                 <Grid
@@ -323,7 +360,7 @@ function AccessTokenIDPage({id}){
                       id="demo-multiple-chip"
                       multiple
                       value={accessModels}
-                      disabled={true}
+                      onChange={(e) => setAccessModels(e.target.value)}
                       fullWidth={true}
                       input={<OutlinedInput id="select-multiple-chip" label={t('access_models')} />}
                       renderValue={(selected) => (
@@ -347,6 +384,20 @@ function AccessTokenIDPage({id}){
                     </Select>
                   </FormControl>
                 </Grid>
+                <Grid
+                  item={true}
+                  md={12}
+                  xs={12}
+                  textAlign={'center'}
+                >
+                  <Button
+                    variant={'contained'}
+                    fullWidth={true}
+                    onClick={onSaveClick}
+                  >
+                    {t('save')}
+                  </Button>
+                </Grid>
               </>
             }
           </Grid>
@@ -356,19 +407,19 @@ function AccessTokenIDPage({id}){
   )
 }
 
-function AccessTokenID(){
+function AccessTokenIDEdit(){
   const router = useRouter()
   const {id} = router.query
-  return <AccessTokenIDPage id={id}/>
+  return <AccessTokenIDEditPage id={id}/>
 }
 
-AccessTokenID.getLayout = (page) => (
+AccessTokenIDEdit.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>
 );
 
-export default AccessTokenID
+export default AccessTokenIDEdit
 
 export async function getStaticPaths() {
   return {

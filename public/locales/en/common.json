@@ -133,5 +133,6 @@
   "access_tokens_model": "Access Tokens Model",
   "access_models": "Access Models",
   "api_key": "API Key",
-  "secret_key": "Secret Key"
+  "secret_key": "Secret Key",
+  "save": "Save"
 }
