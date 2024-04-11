@@ -15,15 +15,12 @@ import { useTranslation } from 'next-i18next';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
-import moment from 'moment';
 import { useRouter } from 'next/router';
-import DeleteAccessTokenDialog from '@/components/admin/access-tokens/dialogs/delete';
 import { useCookies } from 'react-cookie';
 import getConfig from 'next/config';
+import DeleteBlogPostDialog from '@/components/admin/blog-posts/dialogs/delete';
 
-export default function AccessTokensListResults({ allAccessTokens, totalResults, page, onPageChange, limit, onLimitChange, refreshData, ...rest }){
+export default function BlogPostsListResults({ allBlogPosts, totalResults, page, onPageChange, limit, onLimitChange, refreshData, ...rest }){
   const { t } = useTranslation('common')
   const router = useRouter()
   const { publicRuntimeConfig } = getConfig()
@@ -40,24 +37,19 @@ export default function AccessTokensListResults({ allAccessTokens, totalResults,
     onPageChange.call(this, (newPage + 1));
   };
 
-  function formatDate(dateToFormat){
-    const parsedDate = moment.utc(dateToFormat).local()
-    return parsedDate.format("dd/MM/YYYY HH:mm:ss")
-  }
-
-  function deleteAccessTokenDialog(id){
+  function deleteBlogPostDialog(id){
     setActionID(id)
     setOpenDeleteDialog(true)
   }
 
-  function deleteAccessTokenAPI(){
+  function deleteBlogPostAPI(){
     const axios = require('axios');
     const baseURL = (publicRuntimeConfig.isDebugging) ? "http://127.0.0.1:8000/v1/" : 'https://arctouros.ict.ihu.gr/api/v1/api/'
 
     let config = {
       method: 'delete',
       maxBodyLength: Infinity,
-      url: baseURL + 'access-tokens/' + actionID,
+      url: baseURL + 'blog-posts/' + actionID,
       headers: {
         'Authorization': 'Bearer ' + cookies.user_jwt
       }
@@ -89,22 +81,12 @@ export default function AccessTokensListResults({ allAccessTokens, totalResults,
                 <TableCell
                   align={"center"}
                 >
-                  {t('issuer')}
+                  {t('blog_post_title')}
                 </TableCell>
                 <TableCell
                   align={"center"}
                 >
-                  {t('is_enabled')}
-                </TableCell>
-                <TableCell
-                  align={"center"}
-                >
-                  {t('active_since')}
-                </TableCell>
-                <TableCell
-                  align={"center"}
-                >
-                  {t('active_until')}
+                  {t('blog_post_author')}
                 </TableCell>
                 <TableCell
                   align={"center"}
@@ -114,44 +96,25 @@ export default function AccessTokensListResults({ allAccessTokens, totalResults,
               </TableRow>
             </TableHead>
             <TableBody>
-              {allAccessTokens.map((singleAccessToken) => (
+              {allBlogPosts.map((singleBlogPost) => (
                 <TableRow
-                  key={singleAccessToken.id}
+                  key={singleBlogPost.id}
                   hover
                 >
                   <TableCell
                     align={"center"}
                   >
-                    {singleAccessToken.id}
+                    {singleBlogPost.id}
                   </TableCell>
                   <TableCell
                     align={"center"}
                   >
-                    {singleAccessToken.issuer}
+                    {singleBlogPost.post_title}
                   </TableCell>
                   <TableCell
                     align={"center"}
                   >
-                    {(singleAccessToken.disabled) &&
-                      <Tooltip title={t('is_disabled')} placement={"top"}>
-                        <CloseIcon/>
-                      </Tooltip>
-                    }
-                    {(!singleAccessToken.disabled) &&
-                      <Tooltip title={t('is_enabled')} placement={"top"}>
-                        <CheckIcon/>
-                      </Tooltip>
-                    }
-                  </TableCell>
-                  <TableCell
-                    align={"center"}
-                  >
-                    {formatDate(singleAccessToken.created_at)}
-                  </TableCell>
-                  <TableCell
-                    align={"center"}
-                  >
-                    {formatDate(singleAccessToken.active_until)}
+                    {singleBlogPost.post_author_details.first_name} {singleBlogPost.post_author_details.last_name}
                   </TableCell>
                   <TableCell
                     align={'center'}
@@ -159,17 +122,17 @@ export default function AccessTokensListResults({ allAccessTokens, totalResults,
                     <Grid container spacing={2}>
                       <Grid item xs={4}>
                         <Tooltip title={t('view')} placement={"top"}>
-                          <RemoveRedEyeIcon style={{cursor: "pointer"}} onClick={() => router.push("/admin-panel/access-token/" + singleAccessToken.id)}/>
+                          <RemoveRedEyeIcon style={{cursor: "pointer"}} onClick={() => router.push("/admin-panel/blog-post/" + singleBlogPost.id)}/>
                         </Tooltip>
                       </Grid>
                       <Grid item xs={4}>
                         <Tooltip title={t('edit')} placement={"top"}>
-                          <ModeEditIcon style={{cursor: "pointer"}} onClick={() => router.push("/admin-panel/access-token/" + singleAccessToken.id + "/edit")}/>
+                          <ModeEditIcon style={{cursor: "pointer"}} onClick={() => router.push("/admin-panel/blog-post/" + singleBlogPost.id + "/edit")}/>
                         </Tooltip>
                       </Grid>
                       <Grid item xs={4}>
                         <Tooltip title={t('delete')} placement={"top"}>
-                          <DeleteIcon style={{cursor: "pointer"}} onClick={() => deleteAccessTokenDialog(singleAccessToken.id)}/>
+                          <DeleteIcon style={{cursor: "pointer"}} onClick={() => deleteBlogPostDialog(singleBlogPost.id)}/>
                         </Tooltip>
                       </Grid>
                     </Grid>
@@ -190,10 +153,10 @@ export default function AccessTokensListResults({ allAccessTokens, totalResults,
         rowsPerPageOptions={[5, 10, 25, 50, 100, 1000]}
       />
       {openDeleteDialog &&
-        <DeleteAccessTokenDialog
+        <DeleteBlogPostDialog
           accessTokenID={actionID}
           onClose={() => setOpenDeleteDialog(false)}
-          onSave={deleteAccessTokenAPI}
+          onSave={deleteBlogPostAPI}
         />
       }
     </Card>

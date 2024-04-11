@@ -45,7 +45,7 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function AccessTokenIDEditPage(){
+export default function AccessTokenAddPage(){
   const { t } = useTranslation('common')
   const theme = useTheme()
   const { publicRuntimeConfig } = getConfig()
@@ -347,7 +347,7 @@ export default function AccessTokenIDEditPage(){
   )
 }
 
-AccessTokenIDEditPage.getLayout = (page) => (
+AccessTokenAddPage.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>

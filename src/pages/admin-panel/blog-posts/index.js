@@ -3,32 +3,32 @@ import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { Box, Container, Divider, Grid, LinearProgress } from '@mui/material';
-import AccessTokensListToolbar from '@/components/admin/access-tokens/access-tokens-list-toolbar';
 import { DashboardLayout } from '@/components/admin/dashboard-layout';
 import { useCookies } from 'react-cookie';
 import getConfig from 'next/config';
-import AccessTokensListResults from '@/components/admin/access-tokens/access-tokens-list-results';
+import BlogPostsListToolbar from '@/components/admin/blog-posts/blog-posts-list-toolbar';
+import BlogPostsListResults from '@/components/admin/blog-posts/blog-posts-list-results';
 
-export default function AccessTokensIndexPage(){
+export default function BlogPostsIndexPage(){
   const { t } = useTranslation('common')
   const { publicRuntimeConfig } = getConfig()
   const [firstLoad, setFirstLoad] = useState(true)
   const [displayLoading, setDisplayLoading] = useState(true)
   const [cookies, setCookie, removeCookie] = useCookies(['user_jwt']);
 
-  const [allAccessToken, setAllAccessTokens] = useState([])
+  const [allBlogPosts, setAllBlogPosts] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [currentLimit, setCurrentLimit] = useState(10)
   const [allResults, setAllResults] = useState(0)
 
-  function getAccessTokens(page, limit){
+  function getBlogPosts(page, limit){
     const axios = require('axios');
     const baseURL = (publicRuntimeConfig.isDebugging) ? "http://127.0.0.1:8000/v1/" : 'https://arctouros.ict.ihu.gr/api/v1/api/'
 
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: baseURL + 'access-tokens/?page=' + page + '&limit=' + limit,
+      url: baseURL + 'blog-posts/?page=' + page + '&limit=' + limit,
       headers: {
         "Authorization": 'Bearer ' + cookies.user_jwt
       }
@@ -37,7 +37,7 @@ export default function AccessTokensIndexPage(){
     axios.request(config)
          .then((response) => {
            const allResponse = response.data
-           setAllAccessTokens(allResponse['all_access_tokens'])
+           setAllBlogPosts(allResponse['all_blog_posts'])
            setAllResults(allResponse['total_results'])
            setDisplayLoading(false)
          })
@@ -49,7 +49,7 @@ export default function AccessTokensIndexPage(){
   useEffect(() => {
     if (typeof window != "undefined"){
       if (firstLoad){
-        getAccessTokens(1, 10)
+        getBlogPosts(1, 10)
         setFirstLoad(false)
       }
     }
@@ -58,13 +58,13 @@ export default function AccessTokensIndexPage(){
   function onPageChange(newPage){
     setCurrentPage(newPage)
     setDisplayLoading(true)
-    getAccessTokens(newPage, currentLimit)
+    getBlogPosts(newPage, currentLimit)
   }
 
   function onLimitChange(newLimit){
     setCurrentLimit(newLimit)
     setDisplayLoading(true)
-    getAccessTokens(currentPage, newLimit)
+    getBlogPosts(currentPage, newLimit)
   }
 
   function onRefreshData(){
@@ -75,7 +75,7 @@ export default function AccessTokensIndexPage(){
     <>
       <Head>
         <title>
-          {t('access_tokens')} | NetWatch Pro
+          {t('blog_posts')} | NetWatch Pro
         </title>
       </Head>
       <Box
@@ -95,7 +95,7 @@ export default function AccessTokensIndexPage(){
               md={12}
               xs={12}
             >
-              <AccessTokensListToolbar />
+              <BlogPostsListToolbar />
             </Grid>
             <Grid
               item={true}
@@ -116,9 +116,9 @@ export default function AccessTokensIndexPage(){
               }
               {(!displayLoading) &&
                 <>
-                  <AccessTokensListResults
+                  <BlogPostsListResults
                     key={1}
-                    allAccessTokens={allAccessToken}
+                    allBlogPosts={allBlogPosts}
                     totalResults={allResults}
                     page={currentPage}
                     onPageChange={onPageChange}
@@ -136,7 +136,7 @@ export default function AccessTokensIndexPage(){
   )
 }
 
-AccessTokensIndexPage.getLayout = (page) => (
+BlogPostsIndexPage.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>

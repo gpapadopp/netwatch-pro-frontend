@@ -134,5 +134,14 @@
   "access_models": "Access Models",
   "api_key": "API Key",
   "secret_key": "Secret Key",
-  "save": "Save"
+  "save": "Save",
+  "add_blog_post": "Add Blog Post",
+  "blog_post_title": "Blog Post Title",
+  "blog_post_author": "Blog Post Author",
+  "delete_post_author": "Delete Blog Post",
+  "are_you_sure_you_want_to_delete_the_post_author_with_id": "Are you sure you want to delete the blog post with ID",
+  "blog_post_details": "Blog Post Details",
+  "edit_blog_post": "Edit Blog Post",
+  "post_content": "Blog Post Content",
+  "created_at": "Created At"
 }

@@ -134,5 +134,14 @@
   "access_models": "Μοντέλα Πρόσβασης",
   "api_key": "Κλειδί Πρόσβασης",
   "secret_key": "Μυστικό Κλειδί",
-  "save": "Αποθήκευση"
+  "save": "Αποθήκευση",
+  "add_blog_post": "Προσθήκη Άρθρου",
+  "blog_post_title": "Τίτλος Άρθρου",
+  "blog_post_author": "Συγγραφέας Άρθρου",
+  "delete_post_author": "Διαγραφή Άρθρου",
+  "are_you_sure_you_want_to_delete_the_post_author_with_id": "Είστε σίγουρος ότι θέλετε να διαγράψετε το άρθρο με ID",
+  "blog_post_details": "Λεπτομέρειες Άρθρου",
+  "edit_blog_post": "Επεξεργασία Άρθρου",
+  "post_content": "Περιεχόμενο Άρθρου",
+  "created_at": "Δημιουργήθηκε στις"
 }
