@@ -44,7 +44,7 @@ function InternetPackageIDEditPage({id}){
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: baseURL + 'internet-package/' + id,
+      url: baseURL + 'internet-packages/' + id,
       headers: {
         'Authorization': 'Bearer ' + cookies.user_jwt
       }
