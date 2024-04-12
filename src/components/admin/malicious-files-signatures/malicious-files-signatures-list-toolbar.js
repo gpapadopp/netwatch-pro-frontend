@@ -31,7 +31,7 @@ export default function MaliciousFilesSignaturesListToolbar(props){
           <Button
             color="primary"
             variant="contained"
-            onClick={() => router.push("/admin-panel/malicious-files-signatures/add")}
+            onClick={() => router.push("/admin-panel/malicious-files-signature/add")}
           >
             {t('add_malicious_file_signature')}
           </Button>

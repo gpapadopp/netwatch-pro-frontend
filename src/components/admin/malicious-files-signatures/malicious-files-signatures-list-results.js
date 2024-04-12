@@ -165,7 +165,7 @@ export default function MaliciousFileSignatureListResults({ allMaliciousFileSign
       />
       {openDeleteDialog &&
         <DeleteMaliciousFileSignatureDialog
-          accessTokenID={actionID}
+          maliciousFileSignatureID={actionID}
           onClose={() => setOpenDeleteDialog(false)}
           onSave={deleteMaliciousFileSignatureAPI}
         />

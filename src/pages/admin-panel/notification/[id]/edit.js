@@ -8,17 +8,18 @@ import { DashboardLayout } from '@/components/admin/dashboard-layout';
 import Head from 'next/head';
 import {
   Box,
-  Button,
+  Button, Checkbox,
   Container,
-  Divider,
+  Divider, FormControlLabel,
   Grid,
   LinearProgress,
   TextField,
   Typography
 } from '@mui/material';
+import moment from 'moment';
 import * as React from 'react';
 
-function MaliciousFileSignatureIDEditPage({id}){
+function NotificationIDEditPage({id}){
   const { t } = useTranslation('common')
   const { publicRuntimeConfig } = getConfig()
   const router = useRouter()
@@ -26,18 +27,20 @@ function MaliciousFileSignatureIDEditPage({id}){
   const [firstLoad, setFirstLoad] = useState(true)
   const [displayLoading, setDisplayLoading] = useState(true)
 
-  const [fileSignature, setFileSignature] = useState("")
-  const [fileType, setFileType] = useState("")
-  const [fileCategory, setFileCategory] = useState("")
+  const [title, setTitle] = useState("")
+  const [content, setContent] = useState("")
+  const [disabled, setDisabled] = useState("")
+  const [createdAt, setCreatedAt] = useState("")
+  const [selectedBanner, setSelectedBanner] = useState(null)
 
-  function getMaliciousFileSignature(){
+  function getNotification(){
     const axios = require('axios');
     const baseURL = (publicRuntimeConfig.isDebugging) ? "http://127.0.0.1:8000/v1/" : 'https://arctouros.ict.ihu.gr/api/v1/api/'
 
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: baseURL + 'malicious-files-signatures/' + id,
+      url: baseURL + 'notifications/' + id,
       headers: {
         'Authorization': 'Bearer ' + cookies.user_jwt
       }
@@ -46,9 +49,10 @@ function MaliciousFileSignatureIDEditPage({id}){
     axios.request(config)
          .then((response) => {
            const allResponse = response.data
-           setFileSignature(allResponse['malicious_file_signature']['file_signature'])
-           setFileType(allResponse['malicious_file_signature']['file_signature_type'])
-           setFileCategory(allResponse['malicious_file_signature']['file_category'])
+           setTitle(allResponse["notification"]["title"])
+           setContent(allResponse["notification"]["context"])
+           setDisabled(allResponse["notification"]["disabled"])
+           setCreatedAt(allResponse["notification"]["created_at"])
            setDisplayLoading(false)
          })
          .catch((error) => {
@@ -60,29 +64,32 @@ function MaliciousFileSignatureIDEditPage({id}){
     if (typeof window !== "undefined"){
       if (id !== undefined){
         if (firstLoad){
-          getMaliciousFileSignature()
+          getNotification()
           setFirstLoad(false)
         }
       }
     }
   }, []);
 
+  function formatDateTime(dateToFormat){
+    const parsedDate = moment.utc(dateToFormat).local()
+    return parsedDate.format("DD/MM/YYYY HH:mm:ss")
+  }
+
   function onSaveClick(){
     const axios = require('axios');
-    const qs = require('qs');
+    const FormData = require('form-data');
     const baseURL = (publicRuntimeConfig.isDebugging) ? "http://127.0.0.1:8000/v1/" : 'https://arctouros.ict.ihu.gr/api/v1/api/'
-    let data = qs.stringify({
-      'file_signature': fileSignature,
-      'file_signature_type': fileType,
-      'file_category': fileCategory
-    });
+    let data = new FormData();
+    data.append('title', title);
+    data.append('context', content);
+    data.append('disabled', (disabled) ? "True": "False");
 
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: baseURL + 'malicious-files-signatures/' + id,
+      url: baseURL + 'notifications/' + id,
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': 'Bearer ' + cookies.user_jwt
       },
       data : data
@@ -91,7 +98,37 @@ function MaliciousFileSignatureIDEditPage({id}){
     axios.request(config)
          .then((response) => {
            const allResponse = response.data
-           router.push("/admin-panel/malicious-file-signature/" + id).then()
+           if (selectedBanner !== null){
+             saveBanner()
+           }
+           router.push("/admin-panel/notification/" + id).then()
+         })
+         .catch((error) => {
+           console.log(error);
+         });
+
+  }
+
+  function saveBanner(){
+    const axios = require('axios');
+    const FormData = require('form-data');
+    const baseURL = (publicRuntimeConfig.isDebugging) ? "http://127.0.0.1:8000/v1/" : 'https://arctouros.ict.ihu.gr/api/v1/api/'
+    let data = new FormData();
+    data.append('banner', selectedBanner);
+
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: baseURL + 'notifications/change-banner/' + id,
+      headers: {
+        'Authorization': 'Bearer ' + cookies.user_jwt
+      },
+      data : data
+    };
+
+    axios.request(config)
+         .then((response) => {
+           const allResponse = response.data
          })
          .catch((error) => {
            console.log(error);
@@ -128,7 +165,7 @@ function MaliciousFileSignatureIDEditPage({id}){
                 sx={{ mb: 3 }}
                 variant="h4"
               >
-                {t('malicious_file_signature_details')}
+                {t('notification_details')}
               </Typography>
             </Grid>
             <Grid
@@ -157,6 +194,15 @@ function MaliciousFileSignatureIDEditPage({id}){
                   item={true}
                   md={12}
                   xs={12}
+                  textAlign={'center'}
+                >
+                  <input type="file" accept="image/*"
+                         onChange={(e) => setSelectedBanner(e.target.files[0])}/>
+                </Grid>
+                <Grid
+                  item={true}
+                  md={12}
+                  xs={12}
                 >
                   <TextField
                     label={'ID'}
@@ -172,45 +218,55 @@ function MaliciousFileSignatureIDEditPage({id}){
                   xs={12}
                 >
                   <TextField
-                    label={t('file_signature')}
-                    value={fileSignature}
-                    multiline={true}
-                    minRows={4}
+                    label={t('notification_title')}
+                    value={title}
                     required={true}
                     fullWidth={true}
-                    onChange={(e) => setFileSignature(e.target.value)}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={6}
-                  xs={6}
-                >
-                  <TextField
-                    label={t('file_signature_type')}
-                    value={fileType}
-                    required={true}
-                    fullWidth={true}
-                    onChange={(e) => setFileType(e.target.value)}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={6}
-                  xs={6}
-                >
-                  <TextField
-                    label={t('file_type')}
-                    value={fileCategory}
-                    required={true}
-                    fullWidth={true}
-                    onChange={(e) => setFileCategory(e.target.value)}
+                    onChange={(e) => setTitle(e.target.value)}
                   />
                 </Grid>
                 <Grid
                   item={true}
                   md={12}
                   xs={12}
+                >
+                  <TextField
+                    label={t('notification_content')}
+                    value={content}
+                    multiline={true}
+                    minRows={4}
+                    required={true}
+                    fullWidth={true}
+                    onChange={(e) => setContent(e.target.value)}
+                  />
+                </Grid>
+                <Grid
+                  item={true}
+                  md={6}
+                  xs={6}
+                >
+                  <TextField
+                    label={t('created_at')}
+                    value={formatDateTime(createdAt)}
+                    required={true}
+                    fullWidth={true}
+                    disabled={true}
+                  />
+                </Grid>
+                <Grid
+                  item={true}
+                  md={6}
+                  xs={6}
+                >
+                  <FormControlLabel control={
+                    <Checkbox checked={!disabled} onChange={(e) => setDisabled(e.target.checked)} />
+                  } label={t('is_enabled')} />
+                </Grid>
+                <Grid
+                  item={true}
+                  md={12}
+                  xs={12}
+                  textAlign={'center'}
                 >
                   <Button
                     variant={'contained'}
@@ -229,19 +285,19 @@ function MaliciousFileSignatureIDEditPage({id}){
   )
 }
 
-function MaliciousFileSignatureIDEdit(){
+function NotificationIDEdit(){
   const router = useRouter()
   const {id} = router.query
-  return <MaliciousFileSignatureIDEditPage id={id}/>
+  return <NotificationIDEditPage id={id}/>
 }
 
-MaliciousFileSignatureIDEdit.getLayout = (page) => (
+NotificationIDEdit.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>
 );
 
-export default MaliciousFileSignatureIDEdit
+export default NotificationIDEdit
 
 export async function getStaticPaths() {
   return {

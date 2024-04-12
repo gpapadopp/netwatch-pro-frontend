@@ -174,7 +174,7 @@ export default function InternetPackagesListResults({ allInternetPackages, total
       />
       {openDeleteDialog &&
         <DeleteInternetPackageDialog
-          accessTokenID={actionID}
+          internetPackageID={actionID}
           onClose={() => setOpenDeleteDialog(false)}
           onSave={deleteInternetPackageAPI}
         />

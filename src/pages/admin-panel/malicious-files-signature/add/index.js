@@ -53,7 +53,7 @@ function MaliciousFileSignatureAddPage(){
          .then((response) => {
            const allResponse = response.data
            const createdID = allResponse['malicious_file_signature']['id']
-           router.push("/admin-panel/malicious-file-signature/" + createdID).then()
+           router.push("/admin-panel/malicious-files-signature/" + createdID).then()
          })
          .catch((error) => {
            console.log(error);
@@ -101,19 +101,6 @@ function MaliciousFileSignatureAddPage(){
               <br/>
               <Divider/>
               <br/>
-            </Grid>
-            <Grid
-              item={true}
-              md={12}
-              xs={12}
-            >
-              <TextField
-                label={'ID'}
-                value={id}
-                required={true}
-                fullWidth={true}
-                disabled={true}
-              />
             </Grid>
             <Grid
               item={true}

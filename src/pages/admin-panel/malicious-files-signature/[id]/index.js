@@ -107,7 +107,7 @@ function MaliciousFileSignatureIDPage({id}){
             >
               <Button
                 variant={"contained"}
-                onClick={() => router.push('/admin-panel/malicious-file-signature/' + id + "/edit")}
+                onClick={() => router.push('/admin-panel/malicious-files-signature/' + id + "/edit")}
               >
                 {t('edit_malicious_file_signature')}
               </Button>

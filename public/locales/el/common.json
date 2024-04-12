@@ -164,5 +164,12 @@
   "delete_malicious_file_signature": "Διαγραφή Υπογραφής Κακοηθούς Αρχείου",
   "are_you_sure_you_want_to_delete_the_malicious_file_signature_with_id": "Είστε σίγουρος ότι θέλετε να διαγράψετε την υπογραφή κακοηθούς αρχείου με ID",
   "malicious_file_signature_details": "Λεπτομέρειες Υπογραφής Κακοηθούς Αρχείου",
-  "edit_malicious_file_signature": "Επεξεργασία Υπογραφής Κακοηθούς Αρχείου"
+  "edit_malicious_file_signature": "Επεξεργασία Υπογραφής Κακοηθούς Αρχείου",
+  "add_notification": "Προσθήκη Ειδοποίησης",
+  "notification_title": "Τίτλος Ειδοποίησης",
+  "delete_notification": "Διαγραφή Ειδοποίησης",
+  "are_you_sure_you_want_to_delete_the_notification_with_id": "Είστε σίγουρος ότι θέλετε να διαγράψετε την ειδοποίηση με ID",
+  "notification_details": "Λεπτομέρειες Ειδοποίησης",
+  "edit_notification": "Επεξεργασία Ειδοποίησης",
+  "notification_content": "Περιεχόμενο Ειδοποίησης"
 }

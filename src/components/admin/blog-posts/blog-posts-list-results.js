@@ -154,7 +154,7 @@ export default function BlogPostsListResults({ allBlogPosts, totalResults, page,
       />
       {openDeleteDialog &&
         <DeleteBlogPostDialog
-          accessTokenID={actionID}
+          blogPostID={actionID}
           onClose={() => setOpenDeleteDialog(false)}
           onSave={deleteBlogPostAPI}
         />

@@ -164,5 +164,12 @@
   "delete_malicious_file_signature": "Delete Malicious File Signature",
   "are_you_sure_you_want_to_delete_the_malicious_file_signature_with_id": "Are you sure you want to delete the malicious file signature with ID",
   "malicious_file_signature_details": "Malicious File Signature Details",
-  "edit_malicious_file_signature": "Edit Malicious File Signature"
+  "edit_malicious_file_signature": "Edit Malicious File Signature",
+  "add_notification": "Add Notification",
+  "notification_title": "Notification Title",
+  "delete_notification": "Delete Notification",
+  "are_you_sure_you_want_to_delete_the_notification_with_id": "Are you sure you want to delete the notification with ID",
+  "notification_details": "Notification Details",
+  "edit_notification": "Edit Notification",
+  "notification_content": "Notification Content"
 }
