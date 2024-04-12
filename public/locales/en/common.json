@@ -156,5 +156,13 @@
   "access_token": "Access Token",
   "header_type": "Header Type",
   "raw_header": "Header",
-  "raw_payload": "Packet Payload"
+  "raw_payload": "Packet Payload",
+  "add_malicious_file_signature": "Add Malicious File Signature",
+  "file_signature": "File Signature",
+  "file_signature_type": "File Signature Type",
+  "file_type": "File Type",
+  "delete_malicious_file_signature": "Delete Malicious File Signature",
+  "are_you_sure_you_want_to_delete_the_malicious_file_signature_with_id": "Are you sure you want to delete the malicious file signature with ID",
+  "malicious_file_signature_details": "Malicious File Signature Details",
+  "edit_malicious_file_signature": "Edit Malicious File Signature"
 }

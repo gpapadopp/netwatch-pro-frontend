@@ -1,6 +1,6 @@
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import getConfig from 'next/config';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
@@ -12,7 +12,6 @@ import {
   Container,
   Divider,
   Grid,
-  LinearProgress,
   TextField,
   Typography
 } from '@mui/material';
@@ -24,8 +23,6 @@ function InternetPackageIDAddPage(){
   const { publicRuntimeConfig } = getConfig()
   const router = useRouter()
   const [cookies, setCookie, removeCookie] = useCookies(['user_jwt']);
-  const [firstLoad, setFirstLoad] = useState(true)
-  const [displayLoading, setDisplayLoading] = useState(true)
 
   const [deviceToken, setDeviceToken] = useState("")
   const [sourceIP, setSourceIP] = useState("")
@@ -35,7 +32,6 @@ function InternetPackageIDAddPage(){
   const [headerType, setHeaderType] = useState("")
   const [rawHeader, setRawHeader] = useState("")
   const [rawPayload, setRawPayload] = useState("")
-  const [createdAt, setCreatedAt] = useState("")
 
   function formatDateTime(dateToFormat){
     const parsedDate = moment.utc(dateToFormat).local()
@@ -83,7 +79,7 @@ function InternetPackageIDAddPage(){
     <>
       <Head>
         <title>
-          {id} | NetWatch Pro
+          {t('add_internet_package')} | NetWatch Pro
         </title>
       </Head>
       <Box
@@ -120,156 +116,141 @@ function InternetPackageIDAddPage(){
               <Divider/>
               <br/>
             </Grid>
-            {displayLoading &&
-              <>
-                <Grid
-                  item={true}
-                  md={12}
-                  xs={12}
-                >
-                  <LinearProgress/>
-                </Grid>
-              </>
-            }
-            {!displayLoading &&
-              <>
-                <Grid
-                  item={true}
-                  md={12}
-                  xs={12}
-                >
-                  <TextField
-                    label={'ID'}
-                    value={id}
-                    required={true}
-                    fullWidth={true}
-                    disabled={true}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={12}
-                  xs={12}
-                >
-                  <TextField
-                    label={t('access_token')}
-                    value={deviceToken}
-                    required={true}
-                    fullWidth={true}
-                    onChange={(e) => setDeviceToken(e.target.value)}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={6}
-                  xs={6}
-                >
-                  <TextField
-                    label={t('source_ip')}
-                    value={sourceIP}
-                    required={true}
-                    fullWidth={true}
-                    onChange={(e) => setSourceIP(e.target.value)}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={6}
-                  xs={6}
-                >
-                  <TextField
-                    label={t('destination_ip')}
-                    value={destinationIP}
-                    required={true}
-                    fullWidth={true}
-                    onChange={(e) => setDestinationIP(e.target.value)}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={6}
-                  xs={6}
-                >
-                  <TextField
-                    label={t('source_mac_address')}
-                    value={sourceMacAddress}
-                    required={true}
-                    fullWidth={true}
-                    onChange={(e) => setSourceMacAddress(e.target.value)}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={6}
-                  xs={6}
-                >
-                  <TextField
-                    label={t('destination_mac_address')}
-                    value={destinationMacAddress}
-                    required={true}
-                    fullWidth={true}
-                    onChange={(e) => setDestinationMacAddress(e.target.value)}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={6}
-                  xs={6}
-                >
-                  <TextField
-                    label={t('header_type')}
-                    value={headerType}
-                    required={true}
-                    fullWidth={true}
-                    onChange={(e) => setHeaderType(e.target.value)}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={6}
-                  xs={6}
-                >
-                  <TextField
-                    label={t('raw_header')}
-                    value={rawHeader}
-                    multiline={true}
-                    minRows={4}
-                    required={true}
-                    fullWidth={true}
-                    onChange={(e) => setRawHeader(e.target.value)}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={12}
-                  xs={12}
-                >
-                  <TextField
-                    label={t('raw_payload')}
-                    value={rawPayload}
-                    multiline={true}
-                    minRows={4}
-                    required={true}
-                    fullWidth={true}
-                    onChange={(e) => setRawPayload(e.target.value)}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={12}
-                  xs={12}
-                  textAlign={'center'}
-                >
-                  <Button
-                    variant={'contained'}
-                    fullWidth={true}
-                    onClick={onSaveClick}
-                  >
-                    {t('save')}
-                  </Button>
-                </Grid>
-              </>
-            }
+            <Grid
+              item={true}
+              md={12}
+              xs={12}
+            >
+              <TextField
+                label={'ID'}
+                value={id}
+                required={true}
+                fullWidth={true}
+                disabled={true}
+              />
+            </Grid>
+            <Grid
+              item={true}
+              md={12}
+              xs={12}
+            >
+              <TextField
+                label={t('access_token')}
+                value={deviceToken}
+                required={true}
+                fullWidth={true}
+                onChange={(e) => setDeviceToken(e.target.value)}
+              />
+            </Grid>
+            <Grid
+              item={true}
+              md={6}
+              xs={6}
+            >
+              <TextField
+                label={t('source_ip')}
+                value={sourceIP}
+                required={true}
+                fullWidth={true}
+                onChange={(e) => setSourceIP(e.target.value)}
+              />
+            </Grid>
+            <Grid
+              item={true}
+              md={6}
+              xs={6}
+            >
+              <TextField
+                label={t('destination_ip')}
+                value={destinationIP}
+                required={true}
+                fullWidth={true}
+                onChange={(e) => setDestinationIP(e.target.value)}
+              />
+            </Grid>
+            <Grid
+              item={true}
+              md={6}
+              xs={6}
+            >
+              <TextField
+                label={t('source_mac_address')}
+                value={sourceMacAddress}
+                required={true}
+                fullWidth={true}
+                onChange={(e) => setSourceMacAddress(e.target.value)}
+              />
+            </Grid>
+            <Grid
+              item={true}
+              md={6}
+              xs={6}
+            >
+              <TextField
+                label={t('destination_mac_address')}
+                value={destinationMacAddress}
+                required={true}
+                fullWidth={true}
+                onChange={(e) => setDestinationMacAddress(e.target.value)}
+              />
+            </Grid>
+            <Grid
+              item={true}
+              md={6}
+              xs={6}
+            >
+              <TextField
+                label={t('header_type')}
+                value={headerType}
+                required={true}
+                fullWidth={true}
+                onChange={(e) => setHeaderType(e.target.value)}
+              />
+            </Grid>
+            <Grid
+              item={true}
+              md={6}
+              xs={6}
+            >
+              <TextField
+                label={t('raw_header')}
+                value={rawHeader}
+                multiline={true}
+                minRows={4}
+                required={true}
+                fullWidth={true}
+                onChange={(e) => setRawHeader(e.target.value)}
+              />
+            </Grid>
+            <Grid
+              item={true}
+              md={12}
+              xs={12}
+            >
+              <TextField
+                label={t('raw_payload')}
+                value={rawPayload}
+                multiline={true}
+                minRows={4}
+                required={true}
+                fullWidth={true}
+                onChange={(e) => setRawPayload(e.target.value)}
+              />
+            </Grid>
+            <Grid
+              item={true}
+              md={12}
+              xs={12}
+              textAlign={'center'}
+            >
+              <Button
+                variant={'contained'}
+                fullWidth={true}
+                onClick={onSaveClick}
+              >
+                {t('save')}
+              </Button>
+            </Grid>
           </Grid>
         </Container>
       </Box>

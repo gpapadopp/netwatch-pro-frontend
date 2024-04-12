@@ -156,5 +156,13 @@
   "access_token": "Άδεια Πρόσβασης",
   "header_type": "Τύπος Κεφαλίδας",
   "raw_header": "Κεφαλίδα",
-  "raw_payload": "Φορτίο Πακέτου"
+  "raw_payload": "Φορτίο Πακέτου",
+  "add_malicious_file_signature": "Προσθήκη Υπογραφής Κακοηθούς Αρχείου",
+  "file_signature": "Υπογραφή Αρχείου",
+  "file_signature_type": "Τύπος Υπογραφής Αρχείου",
+  "file_type": "Τύπος Αρχείου",
+  "delete_malicious_file_signature": "Διαγραφή Υπογραφής Κακοηθούς Αρχείου",
+  "are_you_sure_you_want_to_delete_the_malicious_file_signature_with_id": "Είστε σίγουρος ότι θέλετε να διαγράψετε την υπογραφή κακοηθούς αρχείου με ID",
+  "malicious_file_signature_details": "Λεπτομέρειες Υπογραφής Κακοηθούς Αρχείου",
+  "edit_malicious_file_signature": "Επεξεργασία Υπογραφής Κακοηθούς Αρχείου"
 }
