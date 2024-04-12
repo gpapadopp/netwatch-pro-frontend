@@ -143,5 +143,18 @@
   "blog_post_details": "Blog Post Details",
   "edit_blog_post": "Edit Blog Post",
   "post_content": "Blog Post Content",
-  "created_at": "Created At"
+  "created_at": "Created At",
+  "add_internet_package": "Add Internet Packages",
+  "source_ip": "Source IP",
+  "destination_ip": "Destination IP",
+  "source_mac_address": "Source MAC Address",
+  "destination_mac_address": "Destination MAC Address",
+  "delete_internet_package": "Delete Internet Package",
+  "are_you_sure_you_want_to_delete_the_internet_package_with_id":"Are you sure you want to delete the internet package with ID",
+  "internet_package_details": "Internet Package Details",
+  "edit_internet_package_details": "Edit Internet Package",
+  "access_token": "Access Token",
+  "header_type": "Header Type",
+  "raw_header": "Header",
+  "raw_payload": "Packet Payload"
 }

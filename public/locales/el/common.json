@@ -143,5 +143,18 @@
   "blog_post_details": "Λεπτομέρειες Άρθρου",
   "edit_blog_post": "Επεξεργασία Άρθρου",
   "post_content": "Περιεχόμενο Άρθρου",
-  "created_at": "Δημιουργήθηκε στις"
+  "created_at": "Δημιουργήθηκε στις",
+  "add_internet_package": "Προσθήκη Πακέτου Διαδικτύου",
+  "source_ip": "IP Αποστολέα",
+  "destination_ip": "IP Παραλήπτη",
+  "source_mac_address": "Διεύθυνση MAC Αποστολέα",
+  "destination_mac_address": "Διεύθυνση MAC Παραλήπτη",
+  "delete_internet_package": "Διαγραφή Πακέτου Διαδικτύου",
+  "are_you_sure_you_want_to_delete_the_internet_package_with_id":"Είστε σίγουρος ότι θέλετε να διαγράψετε το πακέτο διαδικτύου με ID",
+  "internet_package_details": "Λεπτομέρειες Πακέτου Διαδικτύου",
+  "edit_internet_package_details": "Επεξεργασία Πακέτου Διαδικτύου",
+  "access_token": "Άδεια Πρόσβασης",
+  "header_type": "Τύπος Κεφαλίδας",
+  "raw_header": "Κεφαλίδα",
+  "raw_payload": "Φορτίο Πακέτου"
 }
