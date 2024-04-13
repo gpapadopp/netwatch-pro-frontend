@@ -177,5 +177,10 @@
   "app_name": "Όνομα Εφαρμογής",
   "package_name": "Όνομα Πακέτου",
   "delete_package_apk": "Διαγραφή APK Εφαρμογής",
-  "are_you_sure_you_want_to_delete_the_package_apk_with_id": "Είστε σίγουρος ότι θέλετε να διαγράψετε το APK εφαρμογής με ID"
+  "are_you_sure_you_want_to_delete_the_package_apk_with_id": "Είστε σίγουρος ότι θέλετε να διαγράψετε το APK εφαρμογής με ID",
+  "package_apk_details": "Λεπτομέρειες APK Εφαρμογής",
+  "edit_package_apk": "Επεξεργασία APK Εφαρμογής",
+  "device_token": "Αναγνωριστικό Συσκευής",
+  "is_malware": "Είναι Κακόβολο",
+  "md5_checksum_apk": "Checksum Αρχείου"
 }

@@ -177,5 +177,10 @@
   "app_name": "App Name",
   "package_name": "Package Name",
   "delete_package_apk": "Delete Package APK",
-  "are_you_sure_you_want_to_delete_the_package_apk_with_id": "Are you sure you want to delete the package APK with ID"
+  "are_you_sure_you_want_to_delete_the_package_apk_with_id": "Are you sure you want to delete the package APK with ID",
+  "package_apk_details": "Package APK Details",
+  "edit_package_apk": "Edit Package APK",
+  "device_token": "Device Token",
+  "is_malware": "Is Malware",
+  "md5_checksum_apk": "File Checksum"
 }

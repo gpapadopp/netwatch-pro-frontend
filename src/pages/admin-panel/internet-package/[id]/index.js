@@ -180,7 +180,7 @@ function InternetPackageIDPage({id}){
                   xs={12}
                 >
                   <TextField
-                    label={t('access_token')}
+                    label={t('device_token')}
                     value={deviceToken}
                     required={true}
                     fullWidth={true}

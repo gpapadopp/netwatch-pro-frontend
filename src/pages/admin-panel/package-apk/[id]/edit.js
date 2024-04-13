@@ -8,9 +8,9 @@ import { DashboardLayout } from '@/components/admin/dashboard-layout';
 import Head from 'next/head';
 import {
   Box,
-  Button,
+  Button, Checkbox,
   Container,
-  Divider,
+  Divider, FormControlLabel,
   Grid,
   LinearProgress,
   TextField,
@@ -19,7 +19,7 @@ import {
 import moment from 'moment';
 import * as React from 'react';
 
-function InternetPackageIDEditPage({id}){
+function PackageAPKIDEditPage({id}){
   const { t } = useTranslation('common')
   const { publicRuntimeConfig } = getConfig()
   const router = useRouter()
@@ -27,24 +27,22 @@ function InternetPackageIDEditPage({id}){
   const [firstLoad, setFirstLoad] = useState(true)
   const [displayLoading, setDisplayLoading] = useState(true)
 
-  const [deviceToken, setDeviceToken] = useState("")
-  const [sourceIP, setSourceIP] = useState("")
-  const [destinationIP, setDestinationIP] = useState("")
-  const [sourceMacAddress, setSourceMacAddress] = useState("")
-  const [destinationMacAddress, setDestinationMacAddress] = useState("")
-  const [headerType, setHeaderType] = useState("")
-  const [rawHeader, setRawHeader] = useState("")
-  const [rawPayload, setRawPayload] = useState("")
+  const [deviceID, setDeviceID] = useState("")
+  const [packageName, setPackageName] = useState("")
+  const [appName, setAppName] = useState("")
+  const [isMalware, setIsMalware] = useState(false)
   const [createdAt, setCreatedAt] = useState("")
+  const [md5Checksum, setMd5Checksum] = useState("")
+  const [accessTokenID, setAccessTokenID] = useState("")
 
-  function getInternetPackage(){
+  function getBlogPost(){
     const axios = require('axios');
     const baseURL = (publicRuntimeConfig.isDebugging) ? "http://127.0.0.1:8000/v1/" : 'https://arctouros.ict.ihu.gr/api/v1/api/'
 
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: baseURL + 'internet-packages/' + id,
+      url: baseURL + 'package-apks/' + id,
       headers: {
         'Authorization': 'Bearer ' + cookies.user_jwt
       }
@@ -53,16 +51,13 @@ function InternetPackageIDEditPage({id}){
     axios.request(config)
          .then((response) => {
            const allResponse = response.data
-           setDeviceToken(allResponse["internet_package"]["device_token"])
-           setSourceIP(allResponse["internet_package"]["source_ip"])
-           setDestinationIP(allResponse["internet_package"]["destination_ip"])
-           setSourceMacAddress(allResponse["internet_package"]["source_mac_address"])
-           setDestinationMacAddress(allResponse["internet_package"]["destination_mac_address"])
-           setHeaderType(allResponse["internet_package"]["header_type"])
-           setRawHeader(allResponse["internet_package"]["raw_header"])
-           setRawPayload(allResponse["internet_package"]["raw_payload"])
-           setCreatedAt(allResponse["internet_package"]["created_at"])
-
+           setDeviceID(allResponse["all_package_apks"]["device_token"])
+           setPackageName(allResponse["all_package_apks"]["package_name"])
+           setAppName(allResponse["all_package_apks"]["app_name"])
+           setCreatedAt(allResponse["all_package_apks"]["created_at"])
+           setIsMalware((allResponse["all_package_apks"]["is_malware"] === 1))
+           setMd5Checksum(allResponse["all_package_apks"]["md5_checksum"])
+           setAccessTokenID(allResponse["all_package_apks"]["access_token_id"])
            setDisplayLoading(false)
          })
          .catch((error) => {
@@ -74,7 +69,7 @@ function InternetPackageIDEditPage({id}){
     if (typeof window !== "undefined"){
       if (id !== undefined){
         if (firstLoad){
-          getInternetPackage()
+          getBlogPost()
           setFirstLoad(false)
         }
       }
@@ -91,19 +86,14 @@ function InternetPackageIDEditPage({id}){
     const qs = require('qs');
     const baseURL = (publicRuntimeConfig.isDebugging) ? "http://127.0.0.1:8000/v1/" : 'https://arctouros.ict.ihu.gr/api/v1/api/'
     let data = qs.stringify({
-      'source_ip': sourceIP,
-      'destination_id': destinationIP,
-      'source_mac_address': sourceMacAddress,
-      'destination_mac_address': destinationMacAddress,
-      'header_type': headerType,
-      'raw_header': rawHeader,
-      'raw_payload': rawPayload
+      'device_token': deviceID,
+      'is_malware': (isMalware) ? "1" : "0"
     });
 
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: baseURL + 'internet-packages/' + id,
+      url: baseURL + 'package-apks/' + id,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': 'Bearer ' + cookies.user_jwt
@@ -114,7 +104,7 @@ function InternetPackageIDEditPage({id}){
     axios.request(config)
          .then((response) => {
            const allResponse = response.data
-           router.push("/admin-panel/internet-package/" + id).then()
+           router.push("/admin-panel/package-apk/" + id).then()
          })
          .catch((error) => {
            console.log(error);
@@ -150,7 +140,7 @@ function InternetPackageIDEditPage({id}){
                 sx={{ mb: 3 }}
                 variant="h4"
               >
-                {t('internet_package_details')}
+                {t('package_apk_details')}
               </Typography>
             </Grid>
             <Grid
@@ -195,7 +185,20 @@ function InternetPackageIDEditPage({id}){
                 >
                   <TextField
                     label={t('device_token')}
-                    value={deviceToken}
+                    value={deviceID}
+                    required={true}
+                    fullWidth={true}
+                    onChange={(e) => setDeviceID(e.target.value)}
+                  />
+                </Grid>
+                <Grid
+                  item={true}
+                  md={6}
+                  xs={6}
+                >
+                  <TextField
+                    label={t('package_name')}
+                    value={packageName}
                     required={true}
                     fullWidth={true}
                     disabled={true}
@@ -207,11 +210,11 @@ function InternetPackageIDEditPage({id}){
                   xs={6}
                 >
                   <TextField
-                    label={t('source_ip')}
-                    value={sourceIP}
+                    label={t('app_name')}
+                    value={appName}
                     required={true}
                     fullWidth={true}
-                    onChange={(e) => setSourceIP(e.target.value)}
+                    disabled={true}
                   />
                 </Grid>
                 <Grid
@@ -219,13 +222,9 @@ function InternetPackageIDEditPage({id}){
                   md={6}
                   xs={6}
                 >
-                  <TextField
-                    label={t('destination_ip')}
-                    value={destinationIP}
-                    required={true}
-                    fullWidth={true}
-                    onChange={(e) => setDestinationIP(e.target.value)}
-                  />
+                  <FormControlLabel control={
+                    <Checkbox checked={!isMalware} onChange={(e) => setIsMalware(e.target.checked)} />
+                  } label={t('is_malware')} />
                 </Grid>
                 <Grid
                   item={true}
@@ -233,67 +232,11 @@ function InternetPackageIDEditPage({id}){
                   xs={6}
                 >
                   <TextField
-                    label={t('source_mac_address')}
-                    value={sourceMacAddress}
+                    label={t('md5_checksum_apk')}
+                    value={md5Checksum}
                     required={true}
                     fullWidth={true}
-                    onChange={(e) => setSourceMacAddress(e.target.value)}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={6}
-                  xs={6}
-                >
-                  <TextField
-                    label={t('destination_mac_address')}
-                    value={destinationMacAddress}
-                    required={true}
-                    fullWidth={true}
-                    onChange={(e) => setDestinationMacAddress(e.target.value)}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={6}
-                  xs={6}
-                >
-                  <TextField
-                    label={t('header_type')}
-                    value={headerType}
-                    required={true}
-                    fullWidth={true}
-                    onChange={(e) => setHeaderType(e.target.value)}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={6}
-                  xs={6}
-                >
-                  <TextField
-                    label={t('raw_header')}
-                    value={rawHeader}
-                    multiline={true}
-                    minRows={4}
-                    required={true}
-                    fullWidth={true}
-                    onChange={(e) => setRawHeader(e.target.value)}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={12}
-                  xs={12}
-                >
-                  <TextField
-                    label={t('raw_payload')}
-                    value={rawPayload}
-                    multiline={true}
-                    minRows={4}
-                    required={true}
-                    fullWidth={true}
-                    onChange={(e) => setRawPayload(e.target.value)}
+                    disabled={true}
                   />
                 </Grid>
                 <Grid
@@ -313,7 +256,6 @@ function InternetPackageIDEditPage({id}){
                   item={true}
                   md={12}
                   xs={12}
-                  textAlign={'center'}
                 >
                   <Button
                     variant={'contained'}
@@ -332,19 +274,19 @@ function InternetPackageIDEditPage({id}){
   )
 }
 
-function InternetPackageIDEdit(){
+function PackageAPKIDEdit(){
   const router = useRouter()
   const {id} = router.query
-  return <InternetPackageIDEditPage id={id}/>
+  return <PackageAPKIDEditPage id={id}/>
 }
 
-InternetPackageIDEdit.getLayout = (page) => (
+PackageAPKIDEdit.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>
 );
 
-export default InternetPackageIDEdit
+export default PackageAPKIDEdit
 
 export async function getStaticPaths() {
   return {

@@ -8,9 +8,9 @@ import { DashboardLayout } from '@/components/admin/dashboard-layout';
 import Head from 'next/head';
 import {
   Box,
-  Button, Checkbox,
+  Button,
   Container,
-  Divider, FormControlLabel,
+  Divider,
   Grid,
   LinearProgress,
   TextField,
@@ -115,7 +115,7 @@ function PackageAPKIDPage({id}){
                 sx={{ mb: 3 }}
                 variant="h4"
               >
-                {t('blog_post_details')}
+                {t('package_apk_details')}
               </Typography>
             </Grid>
             <Grid
@@ -126,9 +126,9 @@ function PackageAPKIDPage({id}){
             >
               <Button
                 variant={"contained"}
-                onClick={() => router.push('/admin-panel/blog-post/' + id + "/edit")}
+                onClick={() => router.push('/admin-panel/package-apk/' + id + "/edit")}
               >
-                {t('edit_blog_post')}
+                {t('edit_package_apk')}
               </Button>
             </Grid>
             <Grid
@@ -157,14 +157,6 @@ function PackageAPKIDPage({id}){
                   item={true}
                   md={12}
                   xs={12}
-                  textAlign={'center'}
-                >
-                  <img src={bannerURL} alt={postTitle} width={'35%'} />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={12}
-                  xs={12}
                 >
                   <TextField
                     label={'ID'}
@@ -180,8 +172,60 @@ function PackageAPKIDPage({id}){
                   xs={12}
                 >
                   <TextField
-                    label={t('blog_post_title')}
-                    value={postTitle}
+                    label={t('device_token')}
+                    value={deviceID}
+                    required={true}
+                    fullWidth={true}
+                    disabled={true}
+                  />
+                </Grid>
+                <Grid
+                  item={true}
+                  md={6}
+                  xs={6}
+                >
+                  <TextField
+                    label={t('package_name')}
+                    value={packageName}
+                    required={true}
+                    fullWidth={true}
+                    disabled={true}
+                  />
+                </Grid>
+                <Grid
+                  item={true}
+                  md={6}
+                  xs={6}
+                >
+                  <TextField
+                    label={t('app_name')}
+                    value={appName}
+                    required={true}
+                    fullWidth={true}
+                    disabled={true}
+                  />
+                </Grid>
+                <Grid
+                  item={true}
+                  md={6}
+                  xs={6}
+                >
+                  <TextField
+                    label={t('is_malware')}
+                    value={(isMalware) ? t('yes') : t("no")}
+                    required={true}
+                    fullWidth={true}
+                    disabled={true}
+                  />
+                </Grid>
+                <Grid
+                  item={true}
+                  md={6}
+                  xs={6}
+                >
+                  <TextField
+                    label={t('md5_checksum_apk')}
+                    value={md5Checksum}
                     required={true}
                     fullWidth={true}
                     disabled={true}
@@ -193,10 +237,46 @@ function PackageAPKIDPage({id}){
                   xs={12}
                 >
                   <TextField
-                    label={t('post_content')}
-                    value={postContent}
-                    multiline={true}
-                    minRows={4}
+                    label={t('created_at')}
+                    value={formatDateTime(createdAt)}
+                    required={true}
+                    fullWidth={true}
+                    disabled={true}
+                  />
+                </Grid>
+                <Grid
+                  item={true}
+                  md={12}
+                  xs={12}
+                  textAlign={'center'}c
+                >
+                  <br/>
+                  <Divider/>
+                  <br/>
+                  <Typography
+                    sx={{ mb: 3 }}
+                    variant="h4"
+                  >
+                    {t('access_token_details')}
+                  </Typography>
+                </Grid>
+                <Grid
+                  item={true}
+                  md={12}
+                  xs={12}
+                >
+                  <br/>
+                  <Divider/>
+                  <br/>
+                </Grid>
+                <Grid
+                  item={true}
+                  md={12}
+                  xs={12}
+                >
+                  <TextField
+                    label={t('access_token')}
+                    value={accessTokenID}
                     required={true}
                     fullWidth={true}
                     disabled={true}
@@ -208,8 +288,8 @@ function PackageAPKIDPage({id}){
                   xs={6}
                 >
                   <TextField
-                    label={t('created_at')}
-                    value={formatDateTime(createdAt)}
+                    label={t('issuer')}
+                    value={issuer}
                     required={true}
                     fullWidth={true}
                     disabled={true}
@@ -220,9 +300,13 @@ function PackageAPKIDPage({id}){
                   md={6}
                   xs={6}
                 >
-                  <FormControlLabel control={
-                    <Checkbox checked={!disabled} disabled={true} />
-                  } label={t('is_enabled')} />
+                  <TextField
+                    label={t('purpose')}
+                    value={purpose}
+                    required={true}
+                    fullWidth={true}
+                    disabled={true}
+                  />
                 </Grid>
               </>
             }
