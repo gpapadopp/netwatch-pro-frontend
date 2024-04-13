@@ -2,7 +2,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { Box, Container, Divider, Grid, LinearProgress } from '@mui/material';
+import { Box, Container, Divider, Grid, LinearProgress, Typography } from '@mui/material';
 import { DashboardLayout } from '@/components/admin/dashboard-layout';
 import getConfig from 'next/config';
 import NotificationsListToolbar from '@/components/admin/notifications/notifications-list-toolbar';
@@ -96,11 +96,25 @@ export default function NotificationsIndexPage(){
               }
               {(!displayLoading) &&
                 <>
-                  <NotificationsListResults
-                    key={1}
-                    allNotifications={allNotifications}
-                    refreshData={onRefreshData}
-                  />
+                {(allNotifications.length === 0) &&
+                  <>
+                    <Typography
+                      textAlign={'center'}
+                      variant={'h6'}
+                    >
+                      {t('there_is_no_notifications')}
+                    </Typography>
+                  </>
+                }
+                {(allNotifications.length !== 0) &&
+                  <>
+                    <NotificationsListResults
+                      key={1}
+                      allNotifications={allNotifications}
+                      refreshData={onRefreshData}
+                    />
+                  </>
+                }
                 </>
               }
             </Grid>

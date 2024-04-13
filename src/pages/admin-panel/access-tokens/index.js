@@ -2,7 +2,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { Box, Container, Divider, Grid, LinearProgress } from '@mui/material';
+import { Box, Container, Divider, Grid, LinearProgress, Typography } from '@mui/material';
 import AccessTokensListToolbar from '@/components/admin/access-tokens/access-tokens-list-toolbar';
 import { DashboardLayout } from '@/components/admin/dashboard-layout';
 import { useCookies } from 'react-cookie';
@@ -116,16 +116,30 @@ export default function AccessTokensIndexPage(){
               }
               {(!displayLoading) &&
                 <>
-                  <AccessTokensListResults
-                    key={1}
-                    allAccessTokens={allAccessToken}
-                    totalResults={allResults}
-                    page={currentPage}
-                    onPageChange={onPageChange}
-                    limit={currentLimit}
-                    onLimitChange={onLimitChange}
-                    refreshData={onRefreshData}
-                  />
+                {(allAccessToken.length === 0) &&
+                  <>
+                    <Typography
+                      textAlign={'center'}
+                      variant={'h6'}
+                    >
+                      {t('there_is_no_access_tokens')}
+                    </Typography>
+                  </>
+                }
+                {(allAccessToken.length !== 0) &&
+                  <>
+                    <AccessTokensListResults
+                      key={1}
+                      allAccessTokens={allAccessToken}
+                      totalResults={allResults}
+                      page={currentPage}
+                      onPageChange={onPageChange}
+                      limit={currentLimit}
+                      onLimitChange={onLimitChange}
+                      refreshData={onRefreshData}
+                    />
+                  </>
+                }
                 </>
               }
             </Grid>

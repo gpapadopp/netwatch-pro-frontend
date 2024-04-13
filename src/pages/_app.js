@@ -5,11 +5,8 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { createEmotionCache } from '@/utils/create-emotion-cache';
-import { registerChartJs } from '@/utils/register-chart-js';
 import { theme } from '@/theme';
 import { appWithTranslation } from 'next-i18next'
-
-registerChartJs();
 
 const clientSideEmotionCache = createEmotionCache();
 

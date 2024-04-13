@@ -2,7 +2,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { Box, Container, Divider, Grid, LinearProgress } from '@mui/material';
+import { Box, Container, Divider, Grid, LinearProgress, Typography } from '@mui/material';
 import { DashboardLayout } from '@/components/admin/dashboard-layout';
 import { useCookies } from 'react-cookie';
 import getConfig from 'next/config';
@@ -123,16 +123,30 @@ export default function MaliciousFilesSignaturesIndexPage(){
               }
               {(!displayLoading) &&
                 <>
-                  <MaliciousFileSignatureListResults
-                    key={1}
-                    allMaliciousFileSignatures={allMaliciousFilesSignatures}
-                    totalResults={allResults}
-                    page={currentPage}
-                    onPageChange={onPageChange}
-                    limit={currentLimit}
-                    onLimitChange={onLimitChange}
-                    refreshData={onRefreshData}
-                  />
+                {(allMaliciousFilesSignatures.length === 0) &&
+                  <>
+                    <Typography
+                      textAlign={'center'}
+                      variant={'h6'}
+                    >
+                      {t('there_is_no_malicious_files_signatures')}
+                    </Typography>
+                  </>
+                }
+                {(allMaliciousFilesSignatures.length !== 0) &&
+                  <>
+                    <MaliciousFileSignatureListResults
+                      key={1}
+                      allMaliciousFileSignatures={allMaliciousFilesSignatures}
+                      totalResults={allResults}
+                      page={currentPage}
+                      onPageChange={onPageChange}
+                      limit={currentLimit}
+                      onLimitChange={onLimitChange}
+                      refreshData={onRefreshData}
+                    />
+                  </>
+                }
                 </>
               }
             </Grid>

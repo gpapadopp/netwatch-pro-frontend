@@ -2,7 +2,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { Box, Container, Divider, Grid, LinearProgress } from '@mui/material';
+import { Box, Container, Divider, Grid, LinearProgress, Typography } from '@mui/material';
 import { DashboardLayout } from '@/components/admin/dashboard-layout';
 import { useCookies } from 'react-cookie';
 import getConfig from 'next/config';
@@ -118,16 +118,30 @@ export default function PackagePermissionsIndexPage(){
               }
               {(!displayLoading) &&
                 <>
-                  <PackagePermissionsListResults
-                    key={1}
-                    allPackagePermissions={allPackagePermissions}
-                    totalResults={allResults}
-                    page={currentPage}
-                    onPageChange={onPageChange}
-                    limit={currentLimit}
-                    onLimitChange={onLimitChange}
-                    refreshData={onRefreshData}
-                  />
+                {(allPackagePermissions.length === 0) &&
+                  <>
+                    <Typography
+                      textAlign={'center'}
+                      variant={'h6'}
+                    >
+                      {t('there_is_no_package_permissions')}
+                    </Typography>
+                  </>
+                }
+                {(allPackagePermissions.length !== 0) &&
+                  <>
+                    <PackagePermissionsListResults
+                      key={1}
+                      allPackagePermissions={allPackagePermissions}
+                      totalResults={allResults}
+                      page={currentPage}
+                      onPageChange={onPageChange}
+                      limit={currentLimit}
+                      onLimitChange={onLimitChange}
+                      refreshData={onRefreshData}
+                    />
+                  </>
+                }
                 </>
               }
             </Grid>
