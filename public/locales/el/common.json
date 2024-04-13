@@ -171,5 +171,11 @@
   "are_you_sure_you_want_to_delete_the_notification_with_id": "Είστε σίγουρος ότι θέλετε να διαγράψετε την ειδοποίηση με ID",
   "notification_details": "Λεπτομέρειες Ειδοποίησης",
   "edit_notification": "Επεξεργασία Ειδοποίησης",
-  "notification_content": "Περιεχόμενο Ειδοποίησης"
+  "notification_content": "Περιεχόμενο Ειδοποίησης",
+  "add_with_csv": "Προσθήκη Μέσω CSV",
+  "close": "Κλείσιμο",
+  "app_name": "Όνομα Εφαρμογής",
+  "package_name": "Όνομα Πακέτου",
+  "delete_package_apk": "Διαγραφή APK Εφαρμογής",
+  "are_you_sure_you_want_to_delete_the_package_apk_with_id": "Είστε σίγουρος ότι θέλετε να διαγράψετε το APK εφαρμογής με ID"
 }

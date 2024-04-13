@@ -6,34 +6,29 @@ import { Box, Container, Divider, Grid, LinearProgress } from '@mui/material';
 import { DashboardLayout } from '@/components/admin/dashboard-layout';
 import { useCookies } from 'react-cookie';
 import getConfig from 'next/config';
-import MaliciousFilesSignaturesListToolbar
-  from '@/components/admin/malicious-files-signatures/malicious-files-signatures-list-toolbar';
-import MaliciousFileSignatureListResults
-  from '@/components/admin/malicious-files-signatures/malicious-files-signatures-list-results';
-import AddCsvFileSignaturesDialog
-  from '@/components/admin/malicious-files-signatures/dialogs/add-csv';
+import PackageApksListToolbar from '@/components/admin/package-apks/package-apks-list-toolbar';
+import PackageApksListResults from '@/components/admin/package-apks/package-apks-list-results';
 
-export default function MaliciousFilesSignaturesIndexPage(){
+export default function PackageAPKsIndexPage(){
   const { t } = useTranslation('common')
   const { publicRuntimeConfig } = getConfig()
   const [firstLoad, setFirstLoad] = useState(true)
   const [displayLoading, setDisplayLoading] = useState(true)
   const [cookies, setCookie, removeCookie] = useCookies(['user_jwt']);
 
-  const [allMaliciousFilesSignatures, setAllMaliciousFilesSignatures] = useState([])
+  const [allPackageAPKs, setAllPackageAPKs] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [currentLimit, setCurrentLimit] = useState(10)
   const [allResults, setAllResults] = useState(0)
-  const [openAddCsvFileDialog, setOpenAddCsvFileDialog] = useState(false)
 
-  function getMaliciousFilesSignatures(page, limit){
+  function getPackageAPKs(page, limit){
     const axios = require('axios');
     const baseURL = (publicRuntimeConfig.isDebugging) ? "http://127.0.0.1:8000/v1/" : 'https://arctouros.ict.ihu.gr/api/v1/api/'
 
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: baseURL + 'malicious-files-signatures/with-pagination/?page=' + page + '&limit=' + limit,
+      url: baseURL + 'package-apks/?page=' + page + '&limit=' + limit,
       headers: {
         "Authorization": 'Bearer ' + cookies.user_jwt
       }
@@ -42,7 +37,7 @@ export default function MaliciousFilesSignaturesIndexPage(){
     axios.request(config)
          .then((response) => {
            const allResponse = response.data
-           setAllMaliciousFilesSignatures(allResponse['malicious_file_signatures'])
+           setAllPackageAPKs(allResponse['all_package_apks'])
            setAllResults(allResponse['total_results'])
            setDisplayLoading(false)
          })
@@ -54,7 +49,7 @@ export default function MaliciousFilesSignaturesIndexPage(){
   useEffect(() => {
     if (typeof window != "undefined"){
       if (firstLoad){
-        getMaliciousFilesSignatures(1, 10)
+        getPackageAPKs(1, 10)
         setFirstLoad(false)
       }
     }
@@ -63,13 +58,13 @@ export default function MaliciousFilesSignaturesIndexPage(){
   function onPageChange(newPage){
     setCurrentPage(newPage)
     setDisplayLoading(true)
-    getMaliciousFilesSignatures(newPage, currentLimit)
+    getPackageAPKs(newPage, currentLimit)
   }
 
   function onLimitChange(newLimit){
     setCurrentLimit(newLimit)
     setDisplayLoading(true)
-    getMaliciousFilesSignatures(currentPage, newLimit)
+    getPackageAPKs(currentPage, newLimit)
   }
 
   function onRefreshData(){
@@ -80,7 +75,7 @@ export default function MaliciousFilesSignaturesIndexPage(){
     <>
       <Head>
         <title>
-          {t('malicious_files_signatures')} | NetWatch Pro
+          {t('package_apks')} | NetWatch Pro
         </title>
       </Head>
       <Box
@@ -100,9 +95,7 @@ export default function MaliciousFilesSignaturesIndexPage(){
               md={12}
               xs={12}
             >
-              <MaliciousFilesSignaturesListToolbar
-                openCsvDialog={() => setOpenAddCsvFileDialog(true)}
-              />
+              <PackageApksListToolbar />
             </Grid>
             <Grid
               item={true}
@@ -123,9 +116,9 @@ export default function MaliciousFilesSignaturesIndexPage(){
               }
               {(!displayLoading) &&
                 <>
-                  <MaliciousFileSignatureListResults
+                  <PackageApksListResults
                     key={1}
-                    allMaliciousFileSignatures={allMaliciousFilesSignatures}
+                    allPackageAPKs={allPackageAPKs}
                     totalResults={allResults}
                     page={currentPage}
                     onPageChange={onPageChange}
@@ -137,19 +130,13 @@ export default function MaliciousFilesSignaturesIndexPage(){
               }
             </Grid>
           </Grid>
-          {openAddCsvFileDialog &&
-            <AddCsvFileSignaturesDialog
-              onClose={() => setOpenAddCsvFileDialog(false)}
-              onSave={onRefreshData}
-            />
-          }
         </Container>
       </Box>
     </>
   )
 }
 
-MaliciousFilesSignaturesIndexPage.getLayout = (page) => (
+PackageAPKsIndexPage.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>

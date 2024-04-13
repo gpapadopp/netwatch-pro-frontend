@@ -35,6 +35,14 @@ export default function MaliciousFilesSignaturesListToolbar(props){
           >
             {t('add_malicious_file_signature')}
           </Button>
+          &nbsp;
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={props.openCsvDialog}
+          >
+            {t('add_with_csv')}
+          </Button>
         </Box>
       </Box>
     </Box>

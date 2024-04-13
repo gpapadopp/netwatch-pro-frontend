@@ -171,5 +171,11 @@
   "are_you_sure_you_want_to_delete_the_notification_with_id": "Are you sure you want to delete the notification with ID",
   "notification_details": "Notification Details",
   "edit_notification": "Edit Notification",
-  "notification_content": "Notification Content"
+  "notification_content": "Notification Content",
+  "add_with_csv": "Add vs CSV",
+  "close": "Close",
+  "app_name": "App Name",
+  "package_name": "Package Name",
+  "delete_package_apk": "Delete Package APK",
+  "are_you_sure_you_want_to_delete_the_package_apk_with_id": "Are you sure you want to delete the package APK with ID"
 }
