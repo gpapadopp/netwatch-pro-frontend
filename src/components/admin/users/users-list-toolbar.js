@@ -1,12 +1,11 @@
 import {
-  Box,
-  Button,
+  Box, Button,
   Typography
 } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 
-export default function AccessTokensListToolbar(props){
+export default function UsersListToolbar(props){
   const { t } = useTranslation('common')
   const router = useRouter()
 
@@ -25,15 +24,15 @@ export default function AccessTokensListToolbar(props){
           sx={{ m: 1 }}
           variant="h4"
         >
-          {t('access_tokens')}
+          {t('users')}
         </Typography>
         <Box sx={{ m: 1 }}>
           <Button
             color="primary"
             variant="contained"
-            onClick={() => router.push("/admin-panel/access-token/add")}
+            onClick={() => router.push("/admin-panel/users/add")}
           >
-            {t('add_access_token')}
+            {t('add_user')}
           </Button>
         </Box>
       </Box>

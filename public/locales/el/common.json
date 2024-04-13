@@ -186,5 +186,12 @@
   "delete_package_permission": "Διαγραφή Άδειας Εφαρμογής",
   "are_you_sure_you_want_to_delete_the_package_permission_with_id": "Είστε σίγουρος ότι θέλετε να διαγράψετε την άδεια εφαρμογής με ID",
   "package_permission_details": "Λεπτομέρειες Άδειας Εφαρμογής",
-  "edit_package_permission": "Επεξεργασία Άδειας Εφαρμογής"
+  "edit_package_permission": "Επεξεργασία Άδειας Εφαρμογής",
+  "add_user": "Προσθήκη Χρήστη",
+  "first_name": "Όνομα",
+  "last_name": "Επώνυμο",
+  "delete_user": "Διαγραφή Χρήστη",
+  "are_you_sure_you_want_to_delete_the_user_with_id": "Είστε σίγουρος ότι θέλετε να διαγράψετε τον χρήστη με ID",
+  "user_details": "Λεπτομέρειες Χρήστη",
+  "edit_user": "Επεξεργασία Χρήστη"
 }

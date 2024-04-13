@@ -186,5 +186,12 @@
   "delete_package_permission": "Delete Package Permission",
   "are_you_sure_you_want_to_delete_the_package_permission_with_id": "Are you sure you want to delete the package permission with ID",
   "package_permission_details": "Package Permission Details",
-  "edit_package_permission": "Edit Package Permission"
+  "edit_package_permission": "Edit Package Permission",
+  "add_user": "Add User",
+  "first_name": "First Name",
+  "last_name": "Last Name",
+  "delete_user": "Delete User",
+  "are_you_sure_you_want_to_delete_the_user_with_id": "Are you sure you want to delete the user with ID",
+  "user_details": "User Details",
+  "edit_user": "Edit User"
 }
