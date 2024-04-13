@@ -8,9 +8,9 @@ import { DashboardLayout } from '@/components/admin/dashboard-layout';
 import Head from 'next/head';
 import {
   Box,
-  Button,
+  Button, Checkbox,
   Container,
-  Divider,
+  Divider, FormControlLabel,
   Grid,
   LinearProgress,
   TextField,
@@ -19,7 +19,7 @@ import {
 import moment from 'moment';
 import * as React from 'react';
 
-function PackageAPKIDPage({id}){
+function PackagePermissionIDEditPage({id}){
   const { t } = useTranslation('common')
   const { publicRuntimeConfig } = getConfig()
   const router = useRouter()
@@ -32,11 +32,6 @@ function PackageAPKIDPage({id}){
   const [appName, setAppName] = useState("")
   const [isMalware, setIsMalware] = useState(false)
   const [createdAt, setCreatedAt] = useState("")
-  const [md5Checksum, setMd5Checksum] = useState("")
-  const [accessTokenID, setAccessTokenID] = useState("")
-
-  const [issuer, setIssuer] = useState("")
-  const [purpose, setPurpose] = useState("")
 
   function getBlogPost(){
     const axios = require('axios');
@@ -45,7 +40,7 @@ function PackageAPKIDPage({id}){
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: baseURL + 'package-apks/' + id,
+      url: baseURL + 'package-permissions/' + id,
       headers: {
         'Authorization': 'Bearer ' + cookies.user_jwt
       }
@@ -54,15 +49,11 @@ function PackageAPKIDPage({id}){
     axios.request(config)
          .then((response) => {
            const allResponse = response.data
-           setDeviceID(allResponse["all_package_apks"]["device_token"])
-           setPackageName(allResponse["all_package_apks"]["package_name"])
-           setAppName(allResponse["all_package_apks"]["app_name"])
-           setCreatedAt(allResponse["all_package_apks"]["created_at"])
-           setIsMalware((allResponse["all_package_apks"]["is_malware"] === 1))
-           setMd5Checksum(allResponse["all_package_apks"]["md5_checksum"])
-           setAccessTokenID(allResponse["all_package_apks"]["access_token_id"])
-           setIssuer(allResponse["all_package_apks"]["access_token_details"]['issuer'])
-           setPurpose(allResponse["all_package_apks"]["access_token_details"]['purpose'])
+           setDeviceID(allResponse["package_permissions"]["device_token"])
+           setPackageName(allResponse["package_permissions"]["package_name"])
+           setAppName(allResponse["package_permissions"]["app_name"])
+           setCreatedAt(allResponse["package_permissions"]["created_at"])
+           setIsMalware((allResponse["package_permissions"]["is_malware"] === 1))
            setDisplayLoading(false)
          })
          .catch((error) => {
@@ -84,6 +75,38 @@ function PackageAPKIDPage({id}){
   function formatDateTime(dateToFormat){
     const parsedDate = moment.utc(dateToFormat).local()
     return parsedDate.format("DD/MM/YYYY HH:mm:ss")
+  }
+
+  function onSaveClick(){
+    const axios = require('axios');
+    const qs = require('qs');
+    const baseURL = (publicRuntimeConfig.isDebugging) ? "http://127.0.0.1:8000/v1/" : 'https://arctouros.ict.ihu.gr/api/v1/api/'
+    let data = qs.stringify({
+      'device_token': deviceID,
+      'package_name': packageName,
+      'app_name': appName,
+      'is_malware': (isMalware) ? "1" : "0"
+    });
+
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: baseURL + 'package-permissions/' + id,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + cookies.user_jwt
+      },
+      data : data
+    };
+
+    axios.request(config)
+         .then((response) => {
+           const allResponse = response.data
+           router.push("/admin-panel/package-permission/" + id).then()
+         })
+         .catch((error) => {
+           console.log(error);
+         });
   }
 
   return (
@@ -115,21 +138,8 @@ function PackageAPKIDPage({id}){
                 sx={{ mb: 3 }}
                 variant="h4"
               >
-                {t('package_apk_details')}
+                {t('package_permission_details')}
               </Typography>
-            </Grid>
-            <Grid
-              item={true}
-              md={12}
-              xs={12}
-              align={'center'}
-            >
-              <Button
-                variant={"contained"}
-                onClick={() => router.push('/admin-panel/package-apk/' + id + "/edit")}
-              >
-                {t('edit_package_apk')}
-              </Button>
             </Grid>
             <Grid
               item={true}
@@ -176,7 +186,7 @@ function PackageAPKIDPage({id}){
                     value={deviceID}
                     required={true}
                     fullWidth={true}
-                    disabled={true}
+                    onChange={(e) => setDeviceID(e.target.value)}
                   />
                 </Grid>
                 <Grid
@@ -189,7 +199,7 @@ function PackageAPKIDPage({id}){
                     value={packageName}
                     required={true}
                     fullWidth={true}
-                    disabled={true}
+                    onChange={(e) => setPackageName(e.target.value)}
                   />
                 </Grid>
                 <Grid
@@ -202,7 +212,7 @@ function PackageAPKIDPage({id}){
                     value={appName}
                     required={true}
                     fullWidth={true}
-                    disabled={true}
+                    onChange={(e) => setAppName(e.target.value)}
                   />
                 </Grid>
                 <Grid
@@ -210,31 +220,14 @@ function PackageAPKIDPage({id}){
                   md={6}
                   xs={6}
                 >
-                  <TextField
-                    label={t('is_malware')}
-                    value={(isMalware) ? t('yes') : t("no")}
-                    required={true}
-                    fullWidth={true}
-                    disabled={true}
-                  />
+                  <FormControlLabel control={
+                    <Checkbox checked={!isMalware} onChange={(e) => setIsMalware(e.target.checked)} />
+                  } label={t('is_malware')} />
                 </Grid>
                 <Grid
                   item={true}
                   md={6}
                   xs={6}
-                >
-                  <TextField
-                    label={t('md5_checksum_apk')}
-                    value={md5Checksum}
-                    required={true}
-                    fullWidth={true}
-                    disabled={true}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={12}
-                  xs={12}
                 >
                   <TextField
                     label={t('created_at')}
@@ -248,65 +241,14 @@ function PackageAPKIDPage({id}){
                   item={true}
                   md={12}
                   xs={12}
-                  textAlign={'center'}
                 >
-                  <br/>
-                  <Divider/>
-                  <br/>
-                  <Typography
-                    sx={{ mb: 3 }}
-                    variant="h4"
+                  <Button
+                    variant={'contained'}
+                    fullWidth={true}
+                    onClick={onSaveClick}
                   >
-                    {t('access_token_details')}
-                  </Typography>
-                </Grid>
-                <Grid
-                  item={true}
-                  md={12}
-                  xs={12}
-                >
-                  <br/>
-                  <Divider/>
-                  <br/>
-                </Grid>
-                <Grid
-                  item={true}
-                  md={12}
-                  xs={12}
-                >
-                  <TextField
-                    label={t('access_token')}
-                    value={accessTokenID}
-                    required={true}
-                    fullWidth={true}
-                    disabled={true}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={6}
-                  xs={6}
-                >
-                  <TextField
-                    label={t('issuer')}
-                    value={issuer}
-                    required={true}
-                    fullWidth={true}
-                    disabled={true}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={6}
-                  xs={6}
-                >
-                  <TextField
-                    label={t('purpose')}
-                    value={purpose}
-                    required={true}
-                    fullWidth={true}
-                    disabled={true}
-                  />
+                    {t('save')}
+                  </Button>
                 </Grid>
               </>
             }
@@ -317,19 +259,19 @@ function PackageAPKIDPage({id}){
   )
 }
 
-function PackageAPKID(){
+function PackagePermissionIDEdit(){
   const router = useRouter()
   const {id} = router.query
-  return <PackageAPKIDPage id={id}/>
+  return <PackagePermissionIDEditPage id={id}/>
 }
 
-PackageAPKID.getLayout = (page) => (
+PackagePermissionIDEdit.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>
 );
 
-export default PackageAPKID
+export default PackagePermissionIDEdit
 
 export async function getStaticPaths() {
   return {

@@ -19,7 +19,7 @@ import {
 import moment from 'moment';
 import * as React from 'react';
 
-function InternetPackageIDPage({id}){
+function PackagePermissionIDPage({id}){
   const { t } = useTranslation('common')
   const { publicRuntimeConfig } = getConfig()
   const router = useRouter()
@@ -27,28 +27,24 @@ function InternetPackageIDPage({id}){
   const [firstLoad, setFirstLoad] = useState(true)
   const [displayLoading, setDisplayLoading] = useState(true)
 
-  const [deviceToken, setDeviceToken] = useState("")
-  const [sourceIP, setSourceIP] = useState("")
-  const [destinationIP, setDestinationIP] = useState("")
-  const [sourceMacAddress, setSourceMacAddress] = useState("")
-  const [destinationMacAddress, setDestinationMacAddress] = useState("")
-  const [headerType, setHeaderType] = useState("")
-  const [rawHeader, setRawHeader] = useState("")
-  const [rawPayload, setRawPayload] = useState("")
+  const [deviceID, setDeviceID] = useState("")
+  const [packageName, setPackageName] = useState("")
+  const [appName, setAppName] = useState("")
+  const [isMalware, setIsMalware] = useState(false)
   const [createdAt, setCreatedAt] = useState("")
+  const [accessTokenID, setAccessTokenID] = useState("")
 
   const [issuer, setIssuer] = useState("")
   const [purpose, setPurpose] = useState("")
-  const [accessTokenID, setAccessTokenID] = useState("")
 
-  function getInternetPackage(){
+  function getBlogPost(){
     const axios = require('axios');
     const baseURL = (publicRuntimeConfig.isDebugging) ? "http://127.0.0.1:8000/v1/" : 'https://arctouros.ict.ihu.gr/api/v1/api/'
 
     let config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: baseURL + 'internet-packages/' + id,
+      url: baseURL + 'package-permissions/' + id,
       headers: {
         'Authorization': 'Bearer ' + cookies.user_jwt
       }
@@ -57,20 +53,14 @@ function InternetPackageIDPage({id}){
     axios.request(config)
          .then((response) => {
            const allResponse = response.data
-           setDeviceToken(allResponse["internet_package"]["device_token"])
-           setSourceIP(allResponse["internet_package"]["source_ip"])
-           setDestinationIP(allResponse["internet_package"]["destination_ip"])
-           setSourceMacAddress(allResponse["internet_package"]["source_mac_address"])
-           setDestinationMacAddress(allResponse["internet_package"]["destination_mac_address"])
-           setHeaderType(allResponse["internet_package"]["header_type"])
-           setRawHeader(allResponse["internet_package"]["raw_header"])
-           setRawPayload(allResponse["internet_package"]["raw_payload"])
-           setCreatedAt(allResponse["internet_package"]["created_at"])
-           setAccessTokenID(allResponse["internet_package"]["access_token_id"])
-
-           setIssuer(allResponse["internet_package"]["access_token_details"]['issuer'])
-           setPurpose(allResponse["internet_package"]["access_token_details"]['purpose'])
-
+           setDeviceID(allResponse["package_permissions"]["device_token"])
+           setPackageName(allResponse["package_permissions"]["package_name"])
+           setAppName(allResponse["package_permissions"]["app_name"])
+           setCreatedAt(allResponse["package_permissions"]["created_at"])
+           setIsMalware((allResponse["package_permissions"]["is_malware"] === 1))
+           setAccessTokenID(allResponse["package_permissions"]["access_token_id"])
+           setIssuer(allResponse["package_permissions"]["access_token_details"]['issuer'])
+           setPurpose(allResponse["package_permissions"]["access_token_details"]['purpose'])
            setDisplayLoading(false)
          })
          .catch((error) => {
@@ -82,7 +72,7 @@ function InternetPackageIDPage({id}){
     if (typeof window !== "undefined"){
       if (id !== undefined){
         if (firstLoad){
-          getInternetPackage()
+          getBlogPost()
           setFirstLoad(false)
         }
       }
@@ -123,7 +113,7 @@ function InternetPackageIDPage({id}){
                 sx={{ mb: 3 }}
                 variant="h4"
               >
-                {t('internet_package_details')}
+                {t('package_permission_details')}
               </Typography>
             </Grid>
             <Grid
@@ -134,9 +124,9 @@ function InternetPackageIDPage({id}){
             >
               <Button
                 variant={"contained"}
-                onClick={() => router.push('/admin-panel/internet-package/' + id + "/edit")}
+                onClick={() => router.push('/admin-panel/package-permission/' + id + "/edit")}
               >
-                {t('edit_internet_package_details')}
+                {t('edit_package_permission')}
               </Button>
             </Grid>
             <Grid
@@ -181,7 +171,7 @@ function InternetPackageIDPage({id}){
                 >
                   <TextField
                     label={t('device_token')}
-                    value={deviceToken}
+                    value={deviceID}
                     required={true}
                     fullWidth={true}
                     disabled={true}
@@ -193,8 +183,8 @@ function InternetPackageIDPage({id}){
                   xs={6}
                 >
                   <TextField
-                    label={t('source_ip')}
-                    value={sourceIP}
+                    label={t('package_name')}
+                    value={packageName}
                     required={true}
                     fullWidth={true}
                     disabled={true}
@@ -206,8 +196,8 @@ function InternetPackageIDPage({id}){
                   xs={6}
                 >
                   <TextField
-                    label={t('destination_ip')}
-                    value={destinationIP}
+                    label={t('app_name')}
+                    value={appName}
                     required={true}
                     fullWidth={true}
                     disabled={true}
@@ -219,8 +209,8 @@ function InternetPackageIDPage({id}){
                   xs={6}
                 >
                   <TextField
-                    label={t('source_mac_address')}
-                    value={sourceMacAddress}
+                    label={t('is_malware')}
+                    value={(isMalware) ? t('yes') : t("no")}
                     required={true}
                     fullWidth={true}
                     disabled={true}
@@ -230,62 +220,6 @@ function InternetPackageIDPage({id}){
                   item={true}
                   md={6}
                   xs={6}
-                >
-                  <TextField
-                    label={t('destination_mac_address')}
-                    value={destinationMacAddress}
-                    required={true}
-                    fullWidth={true}
-                    disabled={true}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={6}
-                  xs={6}
-                >
-                  <TextField
-                    label={t('header_type')}
-                    value={headerType}
-                    required={true}
-                    fullWidth={true}
-                    disabled={true}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={6}
-                  xs={6}
-                >
-                  <TextField
-                    label={t('raw_header')}
-                    value={rawHeader}
-                    multiline={true}
-                    minRows={4}
-                    required={true}
-                    fullWidth={true}
-                    disabled={true}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={12}
-                  xs={12}
-                >
-                  <TextField
-                    label={t('raw_payload')}
-                    value={rawPayload}
-                    multiline={true}
-                    minRows={4}
-                    required={true}
-                    fullWidth={true}
-                    disabled={true}
-                  />
-                </Grid>
-                <Grid
-                  item={true}
-                  md={12}
-                  xs={12}
                 >
                   <TextField
                     label={t('created_at')}
@@ -368,19 +302,19 @@ function InternetPackageIDPage({id}){
   )
 }
 
-function InternetPackageID(){
+function PackagePermissionID(){
   const router = useRouter()
   const {id} = router.query
-  return <InternetPackageIDPage id={id}/>
+  return <PackagePermissionIDPage id={id}/>
 }
 
-InternetPackageID.getLayout = (page) => (
+PackagePermissionID.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>
 );
 
-export default InternetPackageID
+export default PackagePermissionID
 
 export async function getStaticPaths() {
   return {

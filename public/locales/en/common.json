@@ -182,5 +182,9 @@
   "edit_package_apk": "Edit Package APK",
   "device_token": "Device Token",
   "is_malware": "Is Malware",
-  "md5_checksum_apk": "File Checksum"
+  "md5_checksum_apk": "File Checksum",
+  "delete_package_permission": "Delete Package Permission",
+  "are_you_sure_you_want_to_delete_the_package_permission_with_id": "Are you sure you want to delete the package permission with ID",
+  "package_permission_details": "Package Permission Details",
+  "edit_package_permission": "Edit Package Permission"
 }

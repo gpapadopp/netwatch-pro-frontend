@@ -182,5 +182,9 @@
   "edit_package_apk": "Επεξεργασία APK Εφαρμογής",
   "device_token": "Αναγνωριστικό Συσκευής",
   "is_malware": "Είναι Κακόβολο",
-  "md5_checksum_apk": "Checksum Αρχείου"
+  "md5_checksum_apk": "Checksum Αρχείου",
+  "delete_package_permission": "Διαγραφή Άδειας Εφαρμογής",
+  "are_you_sure_you_want_to_delete_the_package_permission_with_id": "Είστε σίγουρος ότι θέλετε να διαγράψετε την άδεια εφαρμογής με ID",
+  "package_permission_details": "Λεπτομέρειες Άδειας Εφαρμογής",
+  "edit_package_permission": "Επεξεργασία Άδειας Εφαρμογής"
 }
