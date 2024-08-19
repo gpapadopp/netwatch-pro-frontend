@@ -27,14 +27,6 @@ export default function SingleBlogItem({postID, postName, postAuthor, postConten
           item={true}
           md={12}
           xs={12}
-          textAlign={'center'}
-        >
-          <img src={imageURL} width={'100%'} alt={postName} style={{cursor: "pointer"}} onClick={() => router.push(blogPageURL).then()}/>
-        </Grid>
-        <Grid
-          item={true}
-          md={12}
-          xs={12}
         >
           <div
             style={{marginLeft: "2%", marginRight: "2%"}}
