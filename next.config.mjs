@@ -8,7 +8,7 @@ const nextConfig = {
   },
   publicRuntimeConfig: {
     // Will be available on both server and client
-    basicURLPath: 'https://arctouros.ict.ihu.gr/',
+    basicURLPath: 'http:///127.0.0.1:8000/',
     localURLPath: 'http://127.0.0.1:8000/',
     locales: ['en', 'el'],
     isDebugging: true
@@ -17,7 +17,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://arctouros.ict.ihu.gr/api/v1/:path*',
+        destination: 'http:///127.0.0.1:8000/v1/:path*',
       },
       {
         source: '/local-run/:path*',
